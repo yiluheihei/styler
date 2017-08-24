@@ -52,10 +52,34 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/customizing_styler.html">Customizing styler</a>
+    </li>
+    <li>
+      <a href="../articles/gsoc_proposal/data_structures.html">Data Structures</a>
+    </li>
+    <li>
+      <a href="../articles/gsoc_proposal/manipulating_nested_parse_data.html">Manipulating the nested parse table</a>
+    </li>
+    <li>
+      <a href="../articles/performance_improvements.html">Performance Improvements</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">News</a>
@@ -87,7 +111,18 @@
     <p>Update indention information of parse data</p>
     
 
-    <pre class="usage"><span class='fu'>indent_round</span>(<span class='no'>pd</span>, <span class='no'>indent_by</span>)</pre>
+    <pre class="usage"><span class='fu'>indent_round</span>(<span class='no'>pd</span>, <span class='no'>indent_by</span>)
+
+<span class='fu'>indent_curly</span>(<span class='no'>pd</span>, <span class='no'>indent_by</span>)
+
+<span class='fu'>indent_op</span>(<span class='no'>pd</span>, <span class='no'>indent_by</span>, <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='no'>math_token</span>, <span class='no'>logical_token</span>, <span class='no'>special_token</span>,
+  <span class='st'>"LEFT_ASSIGN"</span>, <span class='st'>"'$'"</span>))
+
+<span class='fu'>indent_eq_sub</span>(<span class='no'>pd</span>, <span class='no'>indent_by</span>, <span class='kw'>token</span> <span class='kw'>=</span> <span class='st'>"EQ_SUB"</span>)
+
+<span class='fu'>indent_assign</span>(<span class='no'>pd</span>, <span class='no'>indent_by</span>, <span class='kw'>token</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>indent_without_paren</span>(<span class='no'>pd</span>, <span class='kw'>indent_by</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -95,14 +130,31 @@
     <tr>
       <th>pd</th>
       <td><p>A nested or flat parse table that is already enhanced with
-line break and space information via <code><a href='create_filler.html'>create_filler()</a></code> or
-<code><a href='create_filler_nested.html'>create_filler_nested()</a></code>.</p></td>
+line break and space information via <code><a href='create_filler.html'>create_filler()</a></code>.</p></td>
     </tr>
     <tr>
       <th>indent_by</th>
       <td><p>How many spaces should be added after the token of interest.</p></td>
     </tr>
+    <tr>
+      <th>token</th>
+      <td><p>The token the indention should be based on.</p></td>
+    </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
+
+    <ul>
+<li><p><code>indent_round</code>: Inserts indetion based on round brackets.</p></li>
+<li><p><code>indent_op</code>: Indents operatos</p></li>
+<li><p><code>indent_eq_sub</code>: Upates indention for token EQ_SUB. Only differs
+from ident_op in the sense that the last token on the talbe where EQ_SUB
+occurs is not indented (see<code><a href='compute_indent_indices.html'>compute_indent_indices()</a></code>)</p></li>
+<li><p><code>indent_assign</code>: Same as indent_op, but only indents one token
+after <code>token</code>, not all remaining.</p></li>
+<li><p><code>indent_without_paren</code>: Is used to indent if / while / for statements
+that do not have curly brackets.</p></li>
+</ul>
     
 
   </div>
@@ -110,14 +162,16 @@ line break and space information via <code><a href='create_filler.html'>create_f
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#functions">Functions</a></li>
+          </ul>
 
   </div>
 </div>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Kirill Müller.</p>
+  <p>Developed by Kirill Müller, Lorenz Walthert.</p>
 </div>
 
 <div class="pkgdown">

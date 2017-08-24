@@ -29,10 +29,34 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="/index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="articles/index.html">Articles</a>
+  <a href="reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/customizing_styler.html">Customizing styler</a>
+    </li>
+    <li>
+      <a href="articles/gsoc_proposal/data_structures.html">Data Structures</a>
+    </li>
+    <li>
+      <a href="articles/gsoc_proposal/manipulating_nested_parse_data.html">Manipulating the nested parse table</a>
+    </li>
+    <li>
+      <a href="articles/performance_improvements.html">Performance Improvements</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="news/index.html">News</a>
@@ -66,473 +90,26 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#styler" class="anchor"></a>styler</h1></div>
 
-<p>The goal of styler is to provide non-invasive pretty-printing of R source code while adhering to general formatting conventions.</p>
-<div id="dirty-source-file" class="section level2">
-<h2 class="hasAnchor">
-<a href="#dirty-source-file" class="anchor"></a>Dirty source file</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">print_code &lt;-<span class="st"> </span>function(x) {
-  knitr::<span class="kw">asis_output</span>(
-    <span class="kw">paste</span>(
-      <span class="kw">c</span>(<span class="st">"```r"</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">"# ------"</span>, x, <span class="st">"# ------"</span>, <span class="st">"```"</span>),
-      <span class="dt">collapse =</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>))
-}
-
-dirty &lt;-<span class="st"> </span><span class="kw">readLines</span>(here::<span class="kw">here</span>(<span class="st">"tests/testthat/example/in.R"</span>))
-
-<span class="kw">print_code</span>(dirty)
-
-
-<span class="co"># ------</span>
-test &lt;-<span class="st"> </span>function() {
-  <span class="st">"Double quotes remain as they are"</span>
-  <span class="st">'Single quotes are converted to double quotes'</span>
-  <span class="st">'even if the string contains an escaped </span><span class="ch">\'</span><span class="st"> single quote'</span>
-  <span class="st">'but not if it contains a "double quote'</span>
-
-  <span class="co"># Comments are always preserved</span>
-
-  <span class="kw">function_calls</span>(<span class="dt">get_spaces=</span>around_equal)
-
-  <span class="kw">no_space</span>( <span class="kw">after_opening</span>( ), <span class="kw">paren</span>( (<span class="dv">1</span> +<span class="st"> </span><span class="dv">2</span>)))
-  <span class="kw">no_space</span> (<span class="kw">before_opening</span> (), <span class="kw">paren</span> ( (<span class="dv">1</span> +<span class="st"> </span><span class="dv">2</span>)))
-  <span class="kw">no_space</span>(<span class="kw">before</span>(closing ), <span class="kw">paren</span>((<span class="dv">1</span> +<span class="st"> </span><span class="dv">2</span>) ) )
-  <span class="kw">multi</span>(
-    line,
-    call
-  )
-  <span class="kw">multi_line_empty_call</span>(
-  )
-
-  <span class="kw">one_space</span>(after,<span class="kw">comma</span>(<span class="st">"in"</span>,<span class="st">"function"</span>,  args))
-
-  {
-    braced
-    expression
-  }
-
-  <span class="kw">braced</span>(<span class="st">"unnamed"</span>, {
-    <span class="st">"function"</span>
-    call
-  })
-
-  <span class="kw">braced</span>(<span class="dt">named =</span> {
-    <span class="st">"function"</span>
-    call
-  })
-
-  <span class="kw">braced</span>(<span class="st">"unnamed reduces space"</span>,    {
-  })
-
-  <span class="kw">braced</span>(<span class="st">"unnamed adds space space"</span>,{
-  })
-
-  <span class="kw">braced</span>(<span class="dt">named_reduces_space =</span>    {
-  })
-
-  <span class="kw">braced</span>(<span class="dt">named_adds_space =</span>    {
-  })
-
-  <span class="kw">braced</span>(  {
-    empty_removes_space
-  })
-
-  a%/%b
-  a%%b
-  a&amp;&amp;b
-  a||b
-  a==b
-  a!=b
-  a&lt;=b
-  a&gt;=b
-  a&lt;-b
-  a-&gt;b
-  a=b
-  a&lt;b
-  a&gt;b
-  a*b
-  a/b
-  a^b
-  a&amp;b
-  a|b
-  a:<span class="er">=</span>b
-
-  a+b
-  a-b
-  a++b
-  a+-b
-  a++b
-  a-+b
-  a--b
-  a+--b
-  a--+b
-  <span class="kw">call</span>( +<span class="st"> </span>a)
-  <span class="kw">call</span>( -<span class="st"> </span>a)
-  <span class="kw">call</span>(<span class="dv">5</span>, +<span class="st"> </span>a)
-  <span class="kw">call</span>(<span class="dv">5</span>, -<span class="st"> </span>a)
-
-  <span class="co"># Only with conservative settings:</span>
-  <span class="kw">call</span>(
-    preserves, distance,
-    after,     commas,
-    given_has,one
-  )
-
-  if(<span class="ot">TRUE</span>){
-    <span class="ot">FALSE</span>
-  }
-
-  if(<span class="ot">TRUE</span>){
-    <span class="ot">FALSE</span>
-  }else{
-    <span class="ot">TRUE</span>
-  }
-
-  while(<span class="ot">TRUE</span>){
-    <span class="ot">FALSE</span>
-  }
-
-  <span class="kw">single_line</span> ( <span class="st">"function"</span> ,call )
-
-  <span class="kw">multiline</span> (
-  <span class="st">"function"</span>, call )
-
-  <span class="kw">nested</span> ( <span class="kw">function_call</span> ( <span class="st">"in"</span> ,one ,line ) )
-
-  <span class="kw">nested</span> ( <span class="kw">function_call</span> (
-  <span class="st">"in"</span>,
-      multiple,lines ) )
-
-  <span class="kw">nested</span>(
-  <span class="kw">function_call</span> ( with ),
-      many
-  ,     first_level_args  )
-
-  <span class="kw">nested</span>(
-    <span class="kw">function_call</span> ( with ),  <span class="co"># a comment and</span>
-    many <span class="co">#more</span>
-    ,     first_level_args  )
-
-  <span class="kw">difficult</span>(<span class="kw">nested</span>(
-    <span class="st">"function"</span>, call
-  ),
-    with, more, args
-  )
-}
-
-
-<span class="co"># formula</span>
-<span class="kw">lm</span>(a~b+c,<span class="dt">data=</span><span class="ot">NA</span>)
-<span class="kw">lm</span>(a~.-<span class="dv">1</span>,<span class="dt">data=</span><span class="ot">NA</span>)
-a~b:c
-a~b :c
-<span class="co"># ------</span></code></pre></div>
-</div>
-<div id="tidied-file" class="section level2">
-<h2 class="hasAnchor">
-<a href="#tidied-file" class="anchor"></a>Tidied file</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tidy &lt;-<span class="st"> </span><span class="kw"><a href="reference/style_text.html">style_text</a></span>(dirty, <span class="kw"><a href="reference/get_transformers.html">get_transformers</a></span>(<span class="dt">strict =</span> <span class="ot">FALSE</span>))
-
-<span class="kw">print_code</span>(tidy)
-
-
-<span class="co"># ------</span>
-test &lt;-<span class="st"> </span>function() {
-  <span class="st">"Double quotes remain as they are"</span>
-  <span class="st">"Single quotes are converted to double quotes"</span>
-  <span class="st">"even if the string contains an escaped ' single quote"</span>
-  <span class="st">'but not if it contains a "double quote'</span>
-
-  <span class="co"># Comments are always preserved</span>
-
-  <span class="kw">function_calls</span>(<span class="dt">get_spaces =</span> around_equal)
-
-  <span class="kw">no_space</span>(<span class="kw">after_opening</span>(), <span class="kw">paren</span>((<span class="dv">1</span> +<span class="st"> </span><span class="dv">2</span>)))
-  <span class="kw">no_space</span> (<span class="kw">before_opening</span> (), <span class="kw">paren</span> ((<span class="dv">1</span> +<span class="st"> </span><span class="dv">2</span>)))
-  <span class="kw">no_space</span>(<span class="kw">before</span>(closing), <span class="kw">paren</span>((<span class="dv">1</span> +<span class="st"> </span><span class="dv">2</span>)))
-  <span class="kw">multi</span>(
-    line,
-    call
-  )
-  <span class="kw">multi_line_empty_call</span>(
-  )
-
-  <span class="kw">one_space</span>(after, <span class="kw">comma</span>(<span class="st">"in"</span>, <span class="st">"function"</span>,  args))
-
-  {
-    braced
-    expression
-  }
-
-  <span class="kw">braced</span>(<span class="st">"unnamed"</span>, {
-    <span class="st">"function"</span>
-    call
-  })
-
-  <span class="kw">braced</span>(<span class="dt">named =</span> {
-    <span class="st">"function"</span>
-    call
-  })
-
-  <span class="kw">braced</span>(<span class="st">"unnamed reduces space"</span>,    {
-  })
-
-  <span class="kw">braced</span>(<span class="st">"unnamed adds space space"</span>, {
-  })
-
-  <span class="kw">braced</span>(<span class="dt">named_reduces_space =</span>    {
-  })
-
-  <span class="kw">braced</span>(<span class="dt">named_adds_space =</span>    {
-  })
-
-  <span class="kw">braced</span>({
-    empty_removes_space
-  })
-
-  a %/%<span class="st"> </span>b
-  a %%<span class="st"> </span>b
-  a &amp;&amp;<span class="st"> </span>b
-  a ||<span class="st"> </span>b
-  a ==<span class="st"> </span>b
-  a !=<span class="st"> </span>b
-  a &lt;=<span class="st"> </span>b
-  a &gt;=<span class="st"> </span>b
-  a &lt;-<span class="st"> </span>b
-  a -&gt;<span class="st"> </span>b
-  a =<span class="st"> </span>b
-  a &lt;<span class="st"> </span>b
-  a &gt;<span class="st"> </span>b
-  a *<span class="st"> </span>b
-  a /<span class="st"> </span>b
-  a ^<span class="st"> </span>b
-  a &amp;<span class="st"> </span>b
-  a |<span class="st"> </span>b
-  a :<span class="er">=</span><span class="st"> </span>b
-
-  a +<span class="st"> </span>b
-  a -<span class="st"> </span>b
-  a +<span class="st"> </span>+b
-  a +<span class="st"> </span>-b
-  a +<span class="st"> </span>+b
-  a -<span class="st"> </span>+b
-  a -<span class="st"> </span>-b
-  a +<span class="st"> </span>--b
-  a -<span class="st"> </span>-+b
-  <span class="kw">call</span>(+a)
-  <span class="kw">call</span>(-a)
-  <span class="kw">call</span>(<span class="dv">5</span>, +a)
-  <span class="kw">call</span>(<span class="dv">5</span>, -a)
-
-  <span class="co"># Only with conservative settings:</span>
-  <span class="kw">call</span>(
-    preserves, distance,
-    after,     commas,
-    given_has, one
-  )
-
-  if (<span class="ot">TRUE</span>) {
-    <span class="ot">FALSE</span>
-  }
-
-  if (<span class="ot">TRUE</span>) {
-    <span class="ot">FALSE</span>
-  } else {
-    <span class="ot">TRUE</span>
-  }
-
-  while (<span class="ot">TRUE</span>) {
-    <span class="ot">FALSE</span>
-  }
-
-  <span class="kw">single_line</span> (<span class="st">"function"</span> , call)
-
-  <span class="kw">multiline</span> (
-  <span class="st">"function"</span>, call)
-
-  <span class="kw">nested</span> (<span class="kw">function_call</span> (<span class="st">"in"</span> , one , line))
-
-  <span class="kw">nested</span> (<span class="kw">function_call</span> (
-  <span class="st">"in"</span>,
-      multiple, lines))
-
-  <span class="kw">nested</span>(
-  <span class="kw">function_call</span> (with),
-      many
-  ,     first_level_args)
-
-  <span class="kw">nested</span>(
-    <span class="kw">function_call</span> (with),  <span class="co"># a comment and</span>
-    many <span class="co">#more</span>
-    ,     first_level_args)
-
-  <span class="kw">difficult</span>(<span class="kw">nested</span>(
-    <span class="st">"function"</span>, call
-  ),
-    with, more, args
-  )
-}
-
-
-<span class="co"># formula</span>
-<span class="kw">lm</span>(a~b +<span class="st"> </span>c, <span class="dt">data =</span> <span class="ot">NA</span>)
-<span class="kw">lm</span>(a~. -<span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> <span class="ot">NA</span>)
-a~b:c
-a~b :c
-<span class="co"># ------</span></code></pre></div>
-</div>
-<div id="cleaned-file" class="section level2">
-<h2 class="hasAnchor">
-<a href="#cleaned-file" class="anchor"></a>Cleaned file</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">clean &lt;-<span class="st"> </span>styler::<span class="kw"><a href="reference/style_text.html">style_text</a></span>(dirty)
-
-<span class="kw">print_code</span>(clean)
-
-
-<span class="co"># ------</span>
-test &lt;-<span class="st"> </span>function() {
-  <span class="st">"Double quotes remain as they are"</span>
-  <span class="st">"Single quotes are converted to double quotes"</span>
-  <span class="st">"even if the string contains an escaped ' single quote"</span>
-  <span class="st">'but not if it contains a "double quote'</span>
-
-  <span class="co"># Comments are always preserved</span>
-
-  <span class="kw">function_calls</span>(<span class="dt">get_spaces =</span> around_equal)
-
-  <span class="kw">no_space</span>(<span class="kw">after_opening</span>(), <span class="kw">paren</span>((<span class="dv">1</span> +<span class="st"> </span><span class="dv">2</span>)))
-  <span class="kw">no_space</span>(<span class="kw">before_opening</span>(), <span class="kw">paren</span>((<span class="dv">1</span> +<span class="st"> </span><span class="dv">2</span>)))
-  <span class="kw">no_space</span>(<span class="kw">before</span>(closing), <span class="kw">paren</span>((<span class="dv">1</span> +<span class="st"> </span><span class="dv">2</span>)))
-  <span class="kw">multi</span>(
-    line,
-    call
-  )
-  <span class="kw">multi_line_empty_call</span>(
-  )
-
-  <span class="kw">one_space</span>(after, <span class="kw">comma</span>(<span class="st">"in"</span>, <span class="st">"function"</span>, args))
-
-  {
-    braced
-    expression
-  }
-
-  <span class="kw">braced</span>(<span class="st">"unnamed"</span>, {
-    <span class="st">"function"</span>
-    call
-  })
-
-  <span class="kw">braced</span>(<span class="dt">named =</span> {
-    <span class="st">"function"</span>
-    call
-  })
-
-  <span class="kw">braced</span>(<span class="st">"unnamed reduces space"</span>, {
-  })
-
-  <span class="kw">braced</span>(<span class="st">"unnamed adds space space"</span>, {
-  })
-
-  <span class="kw">braced</span>(<span class="dt">named_reduces_space =</span> {
-  })
-
-  <span class="kw">braced</span>(<span class="dt">named_adds_space =</span> {
-  })
-
-  <span class="kw">braced</span>({
-    empty_removes_space
-  })
-
-  a %/%<span class="st"> </span>b
-  a %%<span class="st"> </span>b
-  a &amp;&amp;<span class="st"> </span>b
-  a ||<span class="st"> </span>b
-  a ==<span class="st"> </span>b
-  a !=<span class="st"> </span>b
-  a &lt;=<span class="st"> </span>b
-  a &gt;=<span class="st"> </span>b
-  a &lt;-<span class="st"> </span>b
-  a -&gt;<span class="st"> </span>b
-  a =<span class="st"> </span>b
-  a &lt;<span class="st"> </span>b
-  a &gt;<span class="st"> </span>b
-  a *<span class="st"> </span>b
-  a /<span class="st"> </span>b
-  a ^<span class="st"> </span>b
-  a &amp;<span class="st"> </span>b
-  a |<span class="st"> </span>b
-  a :<span class="er">=</span><span class="st"> </span>b
-
-  a +<span class="st"> </span>b
-  a -<span class="st"> </span>b
-  a +<span class="st"> </span>+b
-  a +<span class="st"> </span>-b
-  a +<span class="st"> </span>+b
-  a -<span class="st"> </span>+b
-  a -<span class="st"> </span>-b
-  a +<span class="st"> </span>--b
-  a -<span class="st"> </span>-+b
-  <span class="kw">call</span>(+a)
-  <span class="kw">call</span>(-a)
-  <span class="kw">call</span>(<span class="dv">5</span>, +a)
-  <span class="kw">call</span>(<span class="dv">5</span>, -a)
-
-  <span class="co"># Only with conservative settings:</span>
-  <span class="kw">call</span>(
-    preserves, distance,
-    after, commas,
-    given_has, one
-  )
-
-  if (<span class="ot">TRUE</span>) {
-    <span class="ot">FALSE</span>
-  }
-
-  if (<span class="ot">TRUE</span>) {
-    <span class="ot">FALSE</span>
-  } else {
-    <span class="ot">TRUE</span>
-  }
-
-  while (<span class="ot">TRUE</span>) {
-    <span class="ot">FALSE</span>
-  }
-
-  <span class="kw">single_line</span>(<span class="st">"function"</span> , call)
-
-  <span class="kw">multiline</span>(
-  <span class="st">"function"</span>, call)
-
-  <span class="kw">nested</span>(<span class="kw">function_call</span>(<span class="st">"in"</span> , one , line))
-
-  <span class="kw">nested</span>(<span class="kw">function_call</span>(
-  <span class="st">"in"</span>,
-      multiple, lines))
-
-  <span class="kw">nested</span>(
-  <span class="kw">function_call</span>(with),
-      many
-  , first_level_args)
-
-  <span class="kw">nested</span>(
-    <span class="kw">function_call</span>(with), <span class="co"># a comment and</span>
-    many <span class="co">#more</span>
-    , first_level_args)
-
-  <span class="kw">difficult</span>(<span class="kw">nested</span>(
-    <span class="st">"function"</span>, call
-  ),
-    with, more, args
-  )
-}
-
-
-<span class="co"># formula</span>
-<span class="kw">lm</span>(a~b +<span class="st"> </span>c, <span class="dt">data =</span> <span class="ot">NA</span>)
-<span class="kw">lm</span>(a~. -<span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> <span class="ot">NA</span>)
-a~b:c
-a~b :c
-<span class="co"># ------</span></code></pre></div>
-</div>
+<p>The goal of styler is to provide non-invasive pretty-printing of R source code while adhering to the <a href="https://github.com/tidyverse/style">tidyverse</a> formatting rules. Support for custom style guides is planned.</p>
+<p>You can style a simple character vector of code with <code><a href="reference/style_text.html">style_text()</a></code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ugly_code &lt;-<span class="st"> "a&lt;-function( x){1+1}           "</span>
+<span class="kw"><a href="reference/style_text.html">style_text</a></span>(ugly_code) %&gt;%
+<span class="st">  </span><span class="kw">cat</span>(<span class="dt">sep =</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)
+<span class="co">#&gt; a &lt;- function(x) {</span>
+<span class="co">#&gt;   1 + 1</span>
+<span class="co">#&gt; }</span></code></pre></div>
+<p>There are a few variants of <code><a href="reference/style_text.html">style_text()</a></code>:</p>
+<ul>
+<li>
+<code><a href="reference/style_file.html">style_file()</a></code> styles a single .R file.</li>
+<li>
+<code><a href="reference/style_dir.html">style_dir()</a></code> styles all .R files in a directory.</li>
+<li>
+<code><a href="reference/style_pkg.html">style_pkg()</a></code> styles the source files of an R package.</li>
+<li>An RStudio Addin that styles the active file .R file</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/lorenzwalthert/some_raw_data/master/styler_0.1.gif" width="650px"></p>
+<p>You can find more information on the wiki of <a href="https://github.com/rstats-gsoc/gsoc2017/wiki/Noninvasive-source-code-formatting">Google Summer of Code 2017</a> or check out the <a href="https://krlmlr.github.io/styler/">pkgdown</a> page.</p>
 </div>
 </div>
   </div>
@@ -550,13 +127,14 @@ a~b :c
 <p><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></p>
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Kirill Müller <br><small class="roles"> Author, maintainer </small> </li>
+<li>Kirill Müller <br><small class="roles"> Author </small> </li>
+<li>Lorenz Walthert <br><small class="roles"> Maintainer, author </small> </li>
 </ul>
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://travis-ci.org/krlmlr/styler"><img src="https://travis-ci.org/krlmlr/styler.svg?branch=master" alt="Build Status"></a></li>
+<li><a href="https://ci.appveyor.com/project/krlmlr/styler"><img src="https://ci.appveyor.com/api/projects/status/github/krlmlr/styler?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
 <li><a href="http://www.repostatus.org/#wip"><img src="http://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public."></a></li>
-<li><a href="https://ci.appveyor.com/project/lorenzwalthert/styler"><img src="https://ci.appveyor.com/api/projects/status/github/krlmlr/styler?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
 </ul>
 </div>
 
@@ -564,7 +142,7 @@ a~b :c
 
 
       <footer><div class="copyright">
-  <p>Developed by Kirill Müller.</p>
+  <p>Developed by Kirill Müller, Lorenz Walthert.</p>
 </div>
 
 <div class="pkgdown">

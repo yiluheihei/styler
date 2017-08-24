@@ -52,10 +52,34 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/customizing_styler.html">Customizing styler</a>
+    </li>
+    <li>
+      <a href="../articles/gsoc_proposal/data_structures.html">Data Structures</a>
+    </li>
+    <li>
+      <a href="../articles/gsoc_proposal/manipulating_nested_parse_data.html">Manipulating the nested parse table</a>
+    </li>
+    <li>
+      <a href="../articles/performance_improvements.html">Performance Improvements</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">News</a>
@@ -84,9 +108,9 @@
     </div>
 
     
-    <p><code><a href='http://www.rdocumentation.org/packages/utils/topics/getParseData'>utils::getParseData()</a></code> is used to obtain a flat parse table from <code>text</code>.
-Subsequentially, it's representation is changed from a flat table into a
-nested parse table with <code><a href='nest_parse_data.html'>nest_parse_data()</a></code>.</p>
+    <p>Parses <code>text</code> to a flat parse table and subsequently changes its
+representation into a nested parse table with
+<code><a href='nest_parse_data.html'>nest_parse_data()</a></code>.</p>
     
 
     <pre class="usage"><span class='fu'>compute_parse_data_nested</span>(<span class='no'>text</span>)</pre>
@@ -103,7 +127,7 @@ nested parse table with <code><a href='nest_parse_data.html'>nest_parse_data()</
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A nested parse table. Apart from the columns provided by
-<code>utils::getParseData()</code>, a column "short" with the first five characters of
+<code><a href='http://www.rdocumentation.org/packages/utils/topics/getParseData'>utils::getParseData()</a></code>, a column "short" with the first five characters of
 "text" is added, the nested subtibbles are in column "child".
 TODO:</p><ul>
 <li><p>Implement enhance_parse_data_nested()</p><ul>
@@ -143,7 +167,7 @@ compute_parse_data_flat_enhanced()</p></li>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Kirill Müller.</p>
+  <p>Developed by Kirill Müller, Lorenz Walthert.</p>
 </div>
 
 <div class="pkgdown">

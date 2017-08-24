@@ -52,10 +52,34 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/customizing_styler.html">Customizing styler</a>
+    </li>
+    <li>
+      <a href="../articles/gsoc_proposal/data_structures.html">Data Structures</a>
+    </li>
+    <li>
+      <a href="../articles/gsoc_proposal/manipulating_nested_parse_data.html">Manipulating the nested parse table</a>
+    </li>
+    <li>
+      <a href="../articles/performance_improvements.html">Performance Improvements</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">News</a>
@@ -105,11 +129,48 @@ at once.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"magrittr"</span>)
-<span class='no'>code</span> <span class='kw'>&lt;-</span> <span class='st'>"a &lt;- function(x) { if(x &gt; 1) { 1+1 } else {x} }"</span>
-<span class='no'>l1</span> <span class='kw'>&lt;-</span> <span class='kw'>styler</span><span class='kw'>:::</span><span class='fu'><a href='compute_parse_data_nested.html'>compute_parse_data_nested</a></span>(<span class='no'>code</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw'>styler</span><span class='kw'>:::</span><span class='fu'><a href='create_filler_nested.html'>create_filler_nested</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='kw'>styler</span><span class='kw'>:::</span><span class='fu'>create_node_from_nested_root</span>()</div></pre>
+    <pre class="examples"><div class='input'><span class='no'>code</span> <span class='kw'>&lt;-</span> <span class='st'>"a &lt;- function(x) { if(x &gt; 1) { 1+1 } else {x} }"</span>
+<span class='no'>nested_pd</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>styler</span><span class='kw ns'>:::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/styler/topics/compute_parse_data_nested'>compute_parse_data_nested</a></span>(<span class='no'>code</span>)
+<span class='no'>initialized</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>styler</span><span class='kw ns'>:::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/styler/topics/visit'>pre_visit</a></span>(<span class='no'>nested_pd</span>, <span class='fu'>c</span>(<span class='kw pkg'>styler</span><span class='kw ns'>:::</span><span class='no'><a href='http://www.rdocumentation.org/packages/styler/topics/create_filler'>create_filler</a></span>))
+<span class='kw pkg'>styler</span><span class='kw ns'>:::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/styler/topics/create_node_from_nested_root'>create_node_from_nested_root</a></span>(<span class='no'>initialized</span>)</div><div class='output co'>#&gt;                                                  levelName
+#&gt; 1  ROOT (token: short_text [lag_newlines/spaces] {id})    
+#&gt; 2   °--expr:  [0/0] {49}                                  
+#&gt; 3       ¦--expr:  [0/1] {3}                               
+#&gt; 4       ¦   °--SYMBOL: a [0/0] {1}                        
+#&gt; 5       ¦--LEFT_ASSIGN: &lt;- [0/1] {2}                      
+#&gt; 6       °--expr:  [0/0] {48}                              
+#&gt; 7           ¦--FUNCTION: funct [0/0] {4}                  
+#&gt; 8           ¦--'(': ( [0/0] {5}                           
+#&gt; 9           ¦--SYMBOL_FORMALS: x [0/0] {6}                
+#&gt; 10          ¦--')': ) [0/1] {7}                           
+#&gt; 11          °--expr:  [0/0] {45}                          
+#&gt; 12              ¦--'{': { [0/1] {9}                       
+#&gt; 13              ¦--expr:  [0/1] {42}                      
+#&gt; 14              ¦   ¦--IF: if [0/0] {10}                  
+#&gt; 15              ¦   ¦--'(': ( [0/0] {11}                  
+#&gt; 16              ¦   ¦--expr:  [0/0] {18}                  
+#&gt; 17              ¦   ¦   ¦--expr:  [0/1] {14}              
+#&gt; 18              ¦   ¦   ¦   °--SYMBOL: x [0/0] {12}       
+#&gt; 19              ¦   ¦   ¦--GT: &gt; [0/1] {13}               
+#&gt; 20              ¦   ¦   °--expr:  [0/0] {16}              
+#&gt; 21              ¦   ¦       °--NUM_CONST: 1 [0/0] {15}    
+#&gt; 22              ¦   ¦--')': ) [0/1] {17}                  
+#&gt; 23              ¦   ¦--expr:  [0/1] {30}                  
+#&gt; 24              ¦   ¦   ¦--'{': { [0/1] {20}              
+#&gt; 25              ¦   ¦   ¦--expr:  [0/1] {27}              
+#&gt; 26              ¦   ¦   ¦   ¦--expr:  [0/0] {22}          
+#&gt; 27              ¦   ¦   ¦   ¦   °--NUM_CONST: 1 [0/0] {21}
+#&gt; 28              ¦   ¦   ¦   ¦--'+': + [0/0] {23}          
+#&gt; 29              ¦   ¦   ¦   °--expr:  [0/0] {25}          
+#&gt; 30              ¦   ¦   ¦       °--NUM_CONST: 1 [0/0] {24}
+#&gt; 31              ¦   ¦   °--'}': } [0/0] {26}              
+#&gt; 32              ¦   ¦--ELSE: else [0/1] {31}              
+#&gt; 33              ¦   °--expr:  [0/0] {39}                  
+#&gt; 34              ¦       ¦--'{': { [0/0] {33}              
+#&gt; 35              ¦       ¦--expr:  [0/0] {36}              
+#&gt; 36              ¦       ¦   °--SYMBOL: x [0/0] {34}       
+#&gt; 37              ¦       °--'}': } [0/0] {35}              
+#&gt; 38              °--'}': } [0/0] {40}                      </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -126,7 +187,7 @@ at once.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Kirill Müller.</p>
+  <p>Developed by Kirill Müller, Lorenz Walthert.</p>
 </div>
 
 <div class="pkgdown">

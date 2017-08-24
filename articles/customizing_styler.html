@@ -122,13 +122,11 @@
 ##   [list output truncated]</code></pre>
 <p>We note that there are different types of transformer functions. <code>filler</code> is initializing some variables in the nested parse table (so it is not actually a transformer), the other elements modify either spacing, line break or tokens. <code>use_raw_indention</code> is not a function, it is just an option. All transformer functions have a similar structure. Let’s pick one and look at it:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/tidyverse_style.html">tidyverse_style</a></span>()$space$remove_space_after_opening_paren</code></pre></div>
-<pre><code>## function (pd_flat) 
-## {
-##     paren_after &lt;- pd_flat$token == "'('"
-##     if (!any(paren_after)) 
-##         return(pd_flat)
-##     pd_flat$spaces[paren_after &amp; (pd_flat$newlines == 0L)] &lt;- 0L
-##     pd_flat
+<pre><code>## function(pd_flat) {
+##   paren_after &lt;- pd_flat$token == "'('"
+##   if (!any(paren_after)) return(pd_flat)
+##   pd_flat$spaces[paren_after &amp; (pd_flat$newlines == 0L)] &lt;- 0L
+##   pd_flat
 ## }
 ## &lt;environment: namespace:styler&gt;</code></pre>
 <p>As the name says, this function removes spaces after the opening parenthesis. But how? Its input is a <em>nest</em>. Since the visitor will go through all levels of nesting, we just need a function that can be applied to a <em>nest</em>, that is, to a parse table at one level of nesting. We can compute the nested parse table and look at one of the levels of nesting that is interesting for us (more on the data structure in the vignettes “Data structures” and “Manipulating the parse table”):</p>
@@ -138,23 +136,23 @@ pd &lt;-<span class="st"> </span>styler:::<span class="kw"><a href="../reference
 pd$child[[<span class="dv">1</span>]] %&gt;%
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(token, terminal, text, newlines, spaces)</code></pre></div>
 <pre><code>## # A tibble: 4 x 5
-##   token terminal  text newlines spaces
-##   &lt;chr&gt;    &lt;lgl&gt; &lt;chr&gt;    &lt;int&gt;  &lt;int&gt;
-## 1  expr    FALSE              0      0
-## 2   '('     TRUE     (        0      1
-## 3  expr    FALSE              0      0
-## 4   ')'     TRUE     )        0      0</code></pre>
+##   token terminal text  newlines spaces
+##   &lt;chr&gt; &lt;lgl&gt;    &lt;chr&gt;    &lt;int&gt;  &lt;int&gt;
+## 1 expr  F        ""           0      0
+## 2 "'('" T        "("          0      1
+## 3 expr  F        ""           0      0
+## 4 "')'" T        ")"          0      0</code></pre>
 <p><code><a href="../reference/create_filler.html">create_filler()</a></code> is called to initialize some variables, it does not actually transform the parse table.</p>
 <p>All the function <code>remove_space_after_opening_paren()</code> now does is looking for the opening bracket and setting the column <code>spaces</code> of the token to zero. Note that it is very important to check whether there is also a line break following after that token. If so, <code>spaces</code> should not be touched because of the way <code>spaces</code> and <code>newlines</code> are defined. <code>spaes</code> are the number of spaces after a token and <code>newlines</code>. Hence, if a line break follows, spaces are not EOL spaces, but rather the spaces directly before the next token. If there is a line break after the token and the value of <code>use_raw_indention</code> is set to <code>TRUE</code> (which means indention is not touched) and the rule would not check for that, indention for the token following <code>(</code> would be removed, which we don’t want. If we apply the rule to our parse table, we can see that the column <code>spaes</code> changes and is now zero for all tokens:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">styler:::<span class="kw">remove_space_after_opening_paren</span>(pd$child[[<span class="dv">1</span>]]) %&gt;%
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(token, terminal, text, newlines, spaces)</code></pre></div>
 <pre><code>## # A tibble: 4 x 5
-##   token terminal  text newlines spaces
-##   &lt;chr&gt;    &lt;lgl&gt; &lt;chr&gt;    &lt;int&gt;  &lt;int&gt;
-## 1  expr    FALSE              0      0
-## 2   '('     TRUE     (        0      0
-## 3  expr    FALSE              0      0
-## 4   ')'     TRUE     )        0      0</code></pre>
+##   token terminal text  newlines spaces
+##   &lt;chr&gt; &lt;lgl&gt;    &lt;chr&gt;    &lt;int&gt;  &lt;int&gt;
+## 1 expr  F        ""           0      0
+## 2 "'('" T        "("          0      0
+## 3 expr  F        ""           0      0
+## 4 "')'" T        ")"          0      0</code></pre>
 <p>All top-level styling functions have an argument <code>style</code> (which defaults to <code>tidyverse_style</code>). If you check out the help file, you can see that the argument <code>style</code> is only used to create the default argument <code>transformers</code>, which defaults to <code>style(...)</code>. This allows to specify options of the styling without specifying them inside the function passed to <code>transformers</code>.</p>
 <p>Let’s clarify that with an example. The following yields the same result:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all.equal</span>(
@@ -189,18 +187,33 @@ pd$child[[<span class="dv">1</span>]] %&gt;%
 </ul>
 <p>You can also look it up in the function that applies the transformers: <code><a href="../reference/apply_transformers.html">apply_transformers()</a></code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">styler:::apply_transformers</code></pre></div>
-<pre><code>## function (pd_nested, transformers) 
-## {
-##     transformed_line_breaks &lt;- pre_visit(pd_nested, c(transformers$filler, 
-##         transformers$line_break))
-##     transformed_updated_multi_line &lt;- post_visit(transformed_line_breaks, 
-##         c(set_multi_line, update_newlines))
-##     transformed_all &lt;- pre_visit(transformed_updated_multi_line, 
-##         c(transformers$space, transformers$token, transformers$indention))
-##     transformed_absolute_indent &lt;- context_to_terminals(transformed_all, 
-##         outer_lag_newlines = 0, outer_indent = 0, outer_spaces = 0, 
-##         outer_indention_refs = NA)
-##     transformed_absolute_indent
+<pre><code>## function(pd_nested, transformers) {
+##   transformed_line_breaks &lt;- pre_visit(
+##     pd_nested,
+##     c(transformers$filler,
+##     transformers$line_break)
+##   )
+## 
+##   transformed_updated_multi_line &lt;- post_visit(
+##     transformed_line_breaks,
+##     c(set_multi_line, update_newlines)
+##   )
+## 
+##   transformed_all &lt;- pre_visit(
+##     transformed_updated_multi_line,
+##     c(transformers$space, transformers$token, transformers$indention)
+##   )
+## 
+##   transformed_absolute_indent &lt;- context_to_terminals(
+##     transformed_all,
+##     outer_lag_newlines = 0,
+##     outer_indent = 0,
+##     outer_spaces = 0,
+##     outer_indention_refs = NA
+##   )
+## 
+##   transformed_absolute_indent
+## 
 ## }
 ## &lt;environment: namespace:styler&gt;</code></pre>
 <p>This means that the order of the styling is clearly defined and it is for example not possible to modify line breaks based on spacing, because spacing will be set after line breaks are set. Do not rely on the column <code>col1</code>, <code>col2</code>, <code>line1</code> and <code>line2</code> in the parse table in any of your function since these columns do only reflect the position of tokens at the point of parsing, i.e. they are not kept up to date through the process of styling.</p>
@@ -223,6 +236,8 @@ pd$child[[<span class="dv">1</span>]] %&gt;%
 <p>We first need to get familiar with the structure of the nested parse table. Note that the structure of the nested parse table is not affected by the position of line breaks and spaces. Let’s first create the nested parse table.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">code &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"add_one &lt;- function(x) { x + 1 }"</span>)
 styler:::<span class="kw"><a href="../reference/create_tree.html">create_tree</a></span>(code)</code></pre></div>
+<pre><code>## Warning: replacing previous import 'scales::viridis_pal' by
+## 'viridis::viridis_pal' when loading 'DiagrammeR'</code></pre>
 <pre><code>##                                              levelName
 ## 1  ROOT (token: short_text [lag_newlines/spaces] {id})
 ## 2   °--expr:  [0/0] {23}                              
@@ -247,13 +262,12 @@ styler:::<span class="kw"><a href="../reference/create_tree.html">create_tree</a
 <p>The token of interest here has id number 10. Let’s navigate there. Since line break rules manipulate the lags <em>before</em> the token, we need to change <code>lag_newlines</code> at the token “‘{’”.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pd$child[[<span class="dv">1</span>]]$child[[<span class="dv">3</span>]]$child[[<span class="dv">5</span>]]</code></pre></div>
 <pre><code>## # A tibble: 3 x 14
-##   line1  col1 line2  col2    id parent token terminal  text short
-##   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;    &lt;lgl&gt; &lt;chr&gt; &lt;chr&gt;
-## 1     1    24     1    24     9     19   '{'     TRUE     {     {
-## 2     1    26     1    30    16     19  expr    FALSE            
-## 3     1    32     1    32    15     19   '}'     TRUE     }     }
-## # ... with 4 more variables: token_before &lt;chr&gt;, token_after &lt;chr&gt;,
-## #   internal &lt;lgl&gt;, child &lt;list&gt;</code></pre>
+##   line1  col1 line2  col2    id parent token term… text  short toke… toke…
+##   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt; &lt;lgl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+## 1     1    24     1    24     9     19 "'{'" T     "{"   "{"   "')'" SYMB…
+## 2     1    26     1    30    16     19 expr  F     ""    ""    &lt;NA&gt;  &lt;NA&gt; 
+## 3     1    32     1    32    15     19 "'}'" T     "}"   "}"   NUM_… ""   
+## # ... with 2 more variables: internal &lt;lgl&gt;, child &lt;list&gt;</code></pre>
 <p>Remember what we said above: A transformer takes a flat parse table as input, updates it and returns it. So here it’s actually simple:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">set_line_break_before_curly_opening &lt;-<span class="st"> </span>function(pd_flat) {
   op &lt;-<span class="st"> </span>pd_flat$token %in%<span class="st"> "'{'"</span>
@@ -278,11 +292,10 @@ styler:::<span class="kw"><a href="../reference/create_tree.html">create_tree</a
 <span class="er">}</span></code></pre></div>
 <p>The easiest way of taking care of that is not applying the rule if there is a comment before the token of interest, which can be checked for within your transformer function. The transformer function from the tidyverse style that removes line breaks before the curly opening bracket looks as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">styler:::remove_line_break_before_curly_opening</code></pre></div>
-<pre><code>## function (pd) 
-## {
-##     rm_break &lt;- (pd$token_after == "'{'") &amp; (pd$token != "COMMENT")
-##     pd$lag_newlines[lag(rm_break)] &lt;- 0L
-##     pd
+<pre><code>## function(pd) {
+##   rm_break &lt;- (pd$token_after == "'{'") &amp; (pd$token != "COMMENT")
+##   pd$lag_newlines[lag(rm_break)] &lt;- 0L
+##   pd
 ## }
 ## &lt;environment: namespace:styler&gt;</code></pre>
 </div>
