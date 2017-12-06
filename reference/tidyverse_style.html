@@ -52,7 +52,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -77,6 +77,9 @@
       <a href="../articles/gsoc_proposal/manipulating_nested_parse_data.html">Manipulating the nested parse table</a>
     </li>
     <li>
+      <a href="../articles/introducing_styler.html">An introduction to styler</a>
+    </li>
+    <li>
       <a href="../articles/performance_improvements.html">Performance Improvements</a>
     </li>
   </ul>
@@ -88,7 +91,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/krlmlr/styler">
+  <a href="https://github.com/r-lib/styler">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -108,11 +111,13 @@
     </div>
 
     
-    <p>The tidyverse style</p>
+    <p>Style code according to the tidyverse style guide.</p>
     
 
     <pre class="usage"><span class='fu'>tidyverse_style</span>(<span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"tokens"</span>, <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>indent_by</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>start_comments_with_one_space</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>start_comments_with_one_space</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>reindention</span> <span class='kw'>=</span> <span class='fu'><a href='reindention.html'>tidyverse_reindention</a></span>(),
+  <span class='kw'>math_token_spacing</span> <span class='kw'>=</span> <span class='fu'><a href='math_token_spacing.html'>tidyverse_math_token_spacing</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -126,7 +131,12 @@ vector of length one.</p></td>
     <tr>
       <th>strict</th>
       <td><p>A logical value indicating whether a set of strict
-or not so strict transformer functions should be returned.</p></td>
+or not so strict transformer functions should be returned. Compare the
+functions returned with or without <code>strict = TRUE</code>. For example,
+<code>strict = TRUE</code> means force <em>one</em> space e.g. after "," and <em>one</em> line break
+e.g. after a closing curly brace. <code>strict = FALSE</code> means to set spaces and
+line breaks to one if there is none and leave the code untouched otherwise.
+See 'Examples'.</p></td>
     </tr>
     <tr>
       <th>indent_by</th>
@@ -136,7 +146,17 @@ operators such as '('.</p></td>
     <tr>
       <th>start_comments_with_one_space</th>
       <td><p>Whether or not comments should start
-with only one space (see <code><a href='start_comments_with_space.html'>start_comments_with_space()</a></code>).</p></td>
+with only one space (see <code>start_comments_with_space()</code>).</p></td>
+    </tr>
+    <tr>
+      <th>reindention</th>
+      <td><p>A list of parameters for regex re-indention, most
+conveniently constructed using <code><a href='reindention.html'>specify_reindention()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>math_token_spacing</th>
+      <td><p>A list of parameters that define spacing around
+math token, conveniently constructed using <code><a href='math_token_spacing.html'>specify_math_token_spacing()</a></code>.</p></td>
     </tr>
     </table>
     
@@ -156,6 +176,10 @@ tokens.</p></li>
 be performed if all less invasive operations are performed too.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='style_text.html'>style_text</a></span>(<span class='st'>"call( 1)"</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='no'>tidyverse_style</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"spaces"</span>)</div><div class='output co'>#&gt; call(1)</div><div class='input'><span class='fu'><a href='style_text.html'>style_text</a></span>(<span class='st'>"call( 1)"</span>, <span class='kw'>transformers</span> <span class='kw'>=</span> <span class='fu'>tidyverse_style</span>(<span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; call(1)</div><div class='input'><span class='fu'><a href='style_text.html'>style_text</a></span>(<span class='fu'>c</span>(<span class='st'>"ab &lt;- 3"</span>, <span class='st'>"a  &lt;-3"</span>), <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='co'># keeps alignment of "&lt;-"</span></div><div class='output co'>#&gt; ab &lt;- 3
+#&gt; a  &lt;- 3</div><div class='input'><span class='fu'><a href='style_text.html'>style_text</a></span>(<span class='fu'>c</span>(<span class='st'>"ab &lt;- 3"</span>, <span class='st'>"a  &lt;-3"</span>), <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='co'># drops alignment of "&lt;-"</span></div><div class='output co'>#&gt; ab &lt;- 3
+#&gt; a &lt;- 3</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -163,7 +187,9 @@ be performed if all less invasive operations are performed too.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#details">Details</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

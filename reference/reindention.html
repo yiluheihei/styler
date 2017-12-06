@@ -52,7 +52,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -91,7 +91,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/krlmlr/styler">
+  <a href="https://github.com/r-lib/styler">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -117,7 +117,7 @@ defaults, so the user can specify deviations from them conveniently without
 the need of setting all arguments explicitly.</p>
     
 
-    <pre class="usage"><span class='fu'>specify_reindention</span>(<span class='kw'>regex_pattern</span> <span class='kw'>=</span> <span class='fu'><a href='regex_for_reindention.html'>regex_none</a></span>(), <span class='kw'>indention</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+    <pre class="usage"><span class='fu'>specify_reindention</span>(<span class='kw'>regex_pattern</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>indention</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>comments_only</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>tidyverse_reindention</span>()</pre>
@@ -128,7 +128,7 @@ the need of setting all arguments explicitly.</p>
     <tr>
       <th>regex_pattern</th>
       <td><p>Character vector with regular expression patterns that
-are to be re-indented with spaces.</p></td>
+are to be re-indented with spaces, <code>NULL</code> if no reindention needed.</p></td>
     </tr>
     <tr>
       <th>indention</th>
@@ -154,6 +154,10 @@ guide.</p></li>
 </ul>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='style_text.html'>style_text</a></span>(<span class='st'>"a &lt;- xyz"</span>, <span class='kw'>reindention</span> <span class='kw'>=</span> <span class='fu'>specify_reindention</span>(
+  <span class='kw'>regex_pattern</span> <span class='kw'>=</span> <span class='st'>"xyz"</span>, <span class='kw'>indention</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>comments_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+)</div><div class='output co'>#&gt; a &lt;-    xyz</div><div class='input'><span class='fu'><a href='style_text.html'>style_text</a></span>(<span class='st'>"a &lt;- xyz"</span>, <span class='kw'>reindention</span> <span class='kw'>=</span> <span class='fu'>tidyverse_reindention</span>())</div><div class='output co'>#&gt; a &lt;- xyz</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -161,7 +165,9 @@ guide.</p></li>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#functions">Functions</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

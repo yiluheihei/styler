@@ -29,7 +29,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -54,6 +54,9 @@
       <a href="../articles/gsoc_proposal/manipulating_nested_parse_data.html">Manipulating the nested parse table</a>
     </li>
     <li>
+      <a href="../articles/introducing_styler.html">An introduction to styler</a>
+    </li>
+    <li>
       <a href="../articles/performance_improvements.html">Performance Improvements</a>
     </li>
   </ul>
@@ -64,7 +67,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/krlmlr/styler">
+  <a href="https://github.com/r-lib/styler">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -92,7 +95,7 @@
 <div class="contents">
 <p>We want to make styler faster.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(styler)
-microbenchmark::<span class="kw">microbenchmark</span>(
+microbenchmark<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(
   <span class="dt">base =</span> <span class="kw"><a href="../reference/style_file.html">style_file</a></span>(<span class="st">"tests/testthat/indention_multiple/overall-in.R"</span>),
   <span class="dt">times =</span> <span class="dv">2</span>
 )
@@ -100,7 +103,7 @@ microbenchmark::<span class="kw">microbenchmark</span>(
 <span class="co">#&gt;  expr      min       lq     mean   median       uq      max neval</span>
 <span class="co">#&gt;  base 4.131253 4.131253 4.172017 4.172017 4.212781 4.212781     2</span></code></pre></div>
 <p>Replacing mutate statments.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">microbenchmark::<span class="kw">microbenchmark</span>(
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">microbenchmark<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(
   <span class="dt">base =</span> <span class="kw"><a href="../reference/style_file.html">style_file</a></span>(<span class="st">"tests/testthat/indention_multiple/overall-in.R"</span>),
   <span class="dt">times =</span> <span class="dv">2</span>
 )
@@ -108,7 +111,7 @@ microbenchmark::<span class="kw">microbenchmark</span>(
 <span class="co">#&gt;  expr     min      lq     mean   median       uq      max neval</span>
 <span class="co">#&gt;  base 2.13616 2.13616 2.223659 2.223659 2.311158 2.311158     2</span></code></pre></div>
 <p>Move <code>opening</code> argument out of needs indention.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">microbenchmark::<span class="kw">microbenchmark</span>(
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">microbenchmark<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(
   <span class="dt">base =</span> <span class="kw"><a href="../reference/style_file.html">style_file</a></span>(<span class="st">"tests/testthat/indention_multiple/overall-in.R"</span>),
   <span class="dt">times =</span> <span class="dv">5</span>
 )
@@ -117,7 +120,7 @@ microbenchmark::<span class="kw">microbenchmark</span>(
 <span class="co">#&gt;  expr     min       lq     mean   median       uq      max neval</span>
 <span class="co">#&gt;  base 2.18097 2.184721 2.225294 2.200893 2.241799 2.318089     5</span></code></pre></div>
 <p>Dropping unnecessary select and arrange stuffstatments</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">microbenchmark::<span class="kw">microbenchmark</span>(
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">microbenchmark<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(
   <span class="dt">base =</span> <span class="kw"><a href="../reference/style_file.html">style_file</a></span>(<span class="st">"tests/testthat/indention_multiple/overall-in.R"</span>),
   <span class="dt">times =</span> <span class="dv">5</span>
 )
@@ -125,7 +128,7 @@ microbenchmark::<span class="kw">microbenchmark</span>(
 <span class="co">#&gt;  expr      min       lq     mean   median       uq      max neval</span>
 <span class="co">#&gt;  base 2.109271 2.134377 2.147821 2.158567 2.165384 2.171505     5</span></code></pre></div>
 <p>Some more stuff (early return, purr)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">microbenchmark::<span class="kw">microbenchmark</span>(
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">microbenchmark<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(
   <span class="dt">base =</span> <span class="kw"><a href="../reference/style_file.html">style_file</a></span>(<span class="st">"tests/testthat/indention_multiple/overall-in.R"</span>),
   <span class="dt">times =</span> <span class="dv">5</span>
 )

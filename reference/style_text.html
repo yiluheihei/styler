@@ -52,7 +52,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -77,6 +77,9 @@
       <a href="../articles/gsoc_proposal/manipulating_nested_parse_data.html">Manipulating the nested parse table</a>
     </li>
     <li>
+      <a href="../articles/introducing_styler.html">An introduction to styler</a>
+    </li>
+    <li>
       <a href="../articles/performance_improvements.html">Performance Improvements</a>
     </li>
   </ul>
@@ -88,7 +91,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/krlmlr/styler">
+  <a href="https://github.com/r-lib/styler">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -108,7 +111,8 @@
     </div>
 
     
-    <p>Styles a character vector</p>
+    <p>Styles a character vector. Each element of the character vector corresponds
+to one line of code.</p>
     
 
     <pre class="usage"><span class='fu'>style_text</span>(<span class='no'>text</span>, <span class='no'>...</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='no'>tidyverse_style</span>, <span class='kw'>transformers</span> <span class='kw'>=</span> <span class='fu'>style</span>(<span class='no'>...</span>))</pre>
@@ -122,26 +126,34 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Passed on to the <code>style</code> function.</p></td>
+      <td><p>Arguments passed on to the <code>style</code> function.</p></td>
     </tr>
     <tr>
       <th>style</th>
       <td><p>A function that creates a style guide to use, by default
-<code><a href='tidyverse_style.html'>tidyverse_style()</a></code> (without the parentheses). Will not be used further
-except to construct the argument <code>transformers</code>.</p></td>
+<code><a href='tidyverse_style.html'>tidyverse_style()</a></code> (without the parentheses). Not used
+further except to construct the argument <code>transformers</code>. See
+<code><a href='style_guides.html'>style_guides()</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>transformers</th>
-      <td><p>A set of transformer functions.</p></td>
+      <td><p>A set of transformer functions. This argument is most
+conveniently constructed via the <code>style</code> argument and <code>...</code>. See
+'Examples'.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p>Other stylers: <code><a href='style_dir.html'>style_dir</a></code>,
-  <code><a href='style_file.html'>style_file</a></code>, <code><a href='style_pkg.html'>style_pkg</a></code></p>
+  <code><a href='style_file.html'>style_file</a></code>, <code><a href='style_pkg.html'>style_pkg</a></code>,
+  <code><a href='styler_addins.html'>styler_addins</a></code></p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>style_text</span>(<span class='st'>"call( 1)"</span>)</div><div class='output co'>#&gt; call(1)</div><div class='input'><span class='fu'>style_text</span>(<span class='st'>"1    + 1"</span>, <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; 1    + 1</div><div class='input'><span class='fu'>style_text</span>(<span class='st'>"a%&gt;%b"</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"spaces"</span>)</div><div class='output co'>#&gt; a %&gt;% b</div><div class='input'><span class='fu'>style_text</span>(<span class='st'>"a%&gt;%b; a"</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"line_breaks"</span>)</div><div class='output co'>#&gt; a %&gt;% b; a</div><div class='input'><span class='fu'>style_text</span>(<span class='st'>"a%&gt;%b; a"</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"tokens"</span>)</div><div class='output co'>#&gt; a %&gt;% b()
+#&gt; a</div><div class='input'><span class='co'># the following is identical but the former is more convenient:</span>
+<span class='fu'>style_text</span>(<span class='st'>"a&lt;-3++1"</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='no'>tidyverse_style</span>, <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; a &lt;- 3 + +1</div><div class='input'><span class='fu'>style_text</span>(<span class='st'>"a&lt;-3++1"</span>, <span class='kw'>transformers</span> <span class='kw'>=</span> <span class='fu'><a href='tidyverse_style.html'>tidyverse_style</a></span>(<span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; a &lt;- 3 + +1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -149,7 +161,9 @@ except to construct the argument <code>transformers</code>.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

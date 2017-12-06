@@ -52,7 +52,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -77,6 +77,9 @@
       <a href="../articles/gsoc_proposal/manipulating_nested_parse_data.html">Manipulating the nested parse table</a>
     </li>
     <li>
+      <a href="../articles/introducing_styler.html">An introduction to styler</a>
+    </li>
+    <li>
       <a href="../articles/performance_improvements.html">Performance Improvements</a>
     </li>
   </ul>
@@ -88,7 +91,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/krlmlr/styler">
+  <a href="https://github.com/r-lib/styler">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -115,21 +118,21 @@ function can be used as an argument for <code>style</code> in top level function
 like <code><a href='style_text.html'>style_text()</a></code> and friends.</p>
     
 
-    <pre class="usage"><span class='fu'>create_style_guide</span>(<span class='kw'>filler</span> <span class='kw'>=</span> <span class='no'>create_filler</span>, <span class='kw'>line_break</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>create_style_guide</span>(<span class='kw'>initialize</span> <span class='kw'>=</span> <span class='no'>initialize_attributes</span>, <span class='kw'>line_break</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>space</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>token</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>indention</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>use_raw_indention</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>use_raw_indention</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>reindention</span> <span class='kw'>=</span> <span class='fu'><a href='reindention.html'>tidyverse_reindention</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>filler</th>
-      <td><p>A filler function that initializes various variables on each
-level of nesting.</p></td>
+      <th>initialize</th>
+      <td><p>The bare name of a function that initializes various
+variables on each level of nesting.</p></td>
     </tr>
     <tr>
       <th>line_break</th>
-      <td><p>A list of transformer functiosn that manipulate line_break
+      <td><p>A list of transformer functions that manipulate line_break
 information.</p></td>
     </tr>
     <tr>
@@ -147,18 +150,36 @@ information.</p></td>
     </tr>
     <tr>
       <th>use_raw_indention</th>
-      <td><p>Boolean indicating wheter or not the raw indention
+      <td><p>Boolean indicating whether or not the raw indention
 should be used.</p></td>
+    </tr>
+    <tr>
+      <th>reindention</th>
+      <td><p>A list of parameters for regex re-indention, most
+conveniently constructed using <code><a href='reindention.html'>specify_reindention()</a></code>.</p></td>
     </tr>
     </table>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>set_line_break_before_curly_opening</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>pd_flat</span>) {
+  <span class='no'>op</span> <span class='kw'>&lt;-</span> <span class='no'>pd_flat</span>$<span class='no'>token</span> <span class='kw'>%in%</span> <span class='st'>"'{'"</span>
+  <span class='no'>pd_flat</span>$<span class='no'>lag_newlines</span>[<span class='no'>op</span>] <span class='kw'>&lt;-</span> <span class='fl'>1L</span>
+  <span class='no'>pd_flat</span>
+}
+<span class='no'>set_line_break_before_curly_opening_style</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>() {
+  <span class='fu'>create_style_guide</span>(<span class='kw'>line_break</span> <span class='kw'>=</span> <span class='no'>set_line_break_before_curly_opening</span>)
+}
+<span class='fu'><a href='style_text.html'>style_text</a></span>(<span class='st'>"a &lt;- function(x) { x }"</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='no'>set_line_break_before_curly_opening_style</span>)</div><div class='output co'>#&gt; a &lt;- function(x)
+#&gt; { x }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+            
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

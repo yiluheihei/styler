@@ -52,7 +52,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -77,6 +77,9 @@
       <a href="../articles/gsoc_proposal/manipulating_nested_parse_data.html">Manipulating the nested parse table</a>
     </li>
     <li>
+      <a href="../articles/introducing_styler.html">An introduction to styler</a>
+    </li>
+    <li>
       <a href="../articles/performance_improvements.html">Performance Improvements</a>
     </li>
   </ul>
@@ -88,7 +91,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/krlmlr/styler">
+  <a href="https://github.com/r-lib/styler">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -109,121 +112,76 @@
     </div>
 
     <div class="contents">
-    <div id="styler-0-0-8-2017-08-24" class="section level2">
+    <div id="styler-0-1-0-2017-12-05" class="section level2">
 <h2 class="hasAnchor">
-<a href="#styler-0-0-8-2017-08-24" class="anchor"></a>styler 0.0-8 (2017-08-24)</h2>
-<ul>
-<li>Vignette on customizing styler (#145).</li>
-<li>No line break after <code>switch()</code> and friends (#152).</li>
-<li>Remove flat relicts completely (#151).</li>
-<li>Don’t reindent function calls and break line correctly for multi-line calls (#149).</li>
-<li>Set space between “=” and “,” (#150).</li>
-<li>Make R CMD Check perfect (#148).</li>
-<li>Adding tests for exception handling with invalid parse data (#139).</li>
-<li>Fix indention by checking for all potential triggers (#142).</li>
-<li>Fix un-indention (#135).</li>
-<li>Support wide characters (#130).</li>
-<li>No spaces around :, :: and :::.</li>
-<li>Redesigning the API (#123).</li>
-<li>Solve eq_sub indention in general (#125).</li>
-<li>Minor refactorings.</li>
-<li>Re-indent token-dependent (#119).</li>
-<li>Supporting more indention patterns.</li>
-<li>Allow raw indention.</li>
-<li>Definitively fixing eol issue with comments.</li>
-<li>Infrastructure.</li>
-<li>Flattening out the parse table.</li>
-<li>New rule: no space after ! -&gt; !!! for tidyeval.</li>
-<li>Fix spacing around ‘{’.</li>
-<li>Don’t drop tokens! Fixes #101.</li>
-<li>EOL spaces in empty comments (and in general) (#98).</li>
-<li>mal-indention in conditional statement due to wrong specification of indent_without_paren) (#95).</li>
-<li>Complicated indentions based on arithmetic and special operators (#96).</li>
-<li>indention interaction on with assignment operator and other operators (#97).</li>
-</ul>
+<a href="#styler-0-1-0-2017-12-05" class="anchor"></a>styler 0.1.0 (2017-12-05)</h2>
+<p>Initial release.</p>
+<div id="stylers" class="section level3">
+<h3 class="hasAnchor">
+<a href="#stylers" class="anchor"></a>stylers</h3>
+<p>These are functions used to style code. They style a directory, a whole package, a file or a string.</p>
+<pre><code><a href="../reference/style_dir.html">style_dir(path = ".", 
+  ..., style = tidyverse_style, transformers = style(...), 
+  filetype = "R", recursive = TRUE, exclude_files = NULL
+)
+
+style_pkg(pkg = ".", 
+  ..., style = tidyverse_style, transformers = style(...), filetype = "R", 
+  exclude_files = "R/RcppExports.R"
+)
+
+
+style_file(path, 
+  ..., style = tidyverse_style, transformers = style(...)
+)
+
+style_text(text, ..., style = tidyverse_style, transformers = style(...))</a></code></pre>
 </div>
-    <div id="styler-0-0-7-2017-07-27" class="section level2">
-<h2 class="hasAnchor">
-<a href="#styler-0-0-7-2017-07-27" class="anchor"></a>styler 0.0-7 (2017-07-27)</h2>
-<ul>
-<li>curly braces don’t move a line up if previous token is comment.</li>
-<li>wrap parse + transform + serialize in new function.</li>
-<li>Speedup of nested styler functions by ~ 4x.</li>
-<li>Use multi line instead of line1 / line2 for indention and unindention.</li>
-<li>Indent multiple.</li>
-<li>add tidyverse rules (indention not yet working properly).</li>
-<li>Refactoring and add token before and afterwards to parse table.</li>
-<li>Implement post visitor instead of complicated move_up child.</li>
-</ul>
+<div id="style-guide-creators" class="section level3">
+<h3 class="hasAnchor">
+<a href="#style-guide-creators" class="anchor"></a>style guide creators</h3>
+<p>This function is used to create a style guide.</p>
+<pre><code><a href="../reference/create_style_guide.html">create_style_guide(
+  initialize = initialize_attributes, 
+  line_break = NULL, 
+  space = NULL, 
+  token = NULL, 
+  indention = NULL, 
+  use_raw_indention = FALSE, 
+  reindention = tidyverse_reindention()
+)</a></code></pre>
 </div>
-    <div id="styler-0-0-6-2017-07-10" class="section level2">
-<h2 class="hasAnchor">
-<a href="#styler-0-0-6-2017-07-10" class="anchor"></a>styler 0.0-6 (2017-07-10)</h2>
-<ul>
-<li>Tidy up README (#43).</li>
-<li>Fix indention of long operator chains (#69).</li>
-<li>Properly format unary operators (#38).</li>
-<li>Fixing indent multiple - one more time (#68).</li>
-<li>Remove spaces before comma (#62).</li>
-<li>Fixing indention with multiple parentheses (#57).</li>
-<li>data.tree gains unique node IDs for proper printing.</li>
-<li>Add <code><a href="../reference/style_file.html">style_file()</a></code> function to style a single .R file.</li>
-<li>Add RStudio add-in to style active .R file.</li>
-<li>hotfix: make <code><a href="../reference/style_pkg.html">style_pkg()</a></code> and <code>style_src()</code> work by passing flat argument.</li>
-</ul>
+<div id="style-guides" class="section level3">
+<h3 class="hasAnchor">
+<a href="#style-guides" class="anchor"></a>style guides</h3>
+<p>These functions are the style guides implemented.</p>
+<pre><code><a href="../reference/tidyverse_style.html">tidyverse_style(
+  scope = "tokens", 
+  strict = TRUE, 
+  indent_by = 2, 
+  start_comments_with_one_space = FALSE, 
+  reindention = tidyverse_reindention(), 
+  math_token_spacing = tidyverse_math_token_spacing()
+)</a></code></pre>
 </div>
-    <div id="styler-0-0-5-2017-06-30" class="section level2">
-<h2 class="hasAnchor">
-<a href="#styler-0-0-5-2017-06-30" class="anchor"></a>styler 0.0-5 (2017-06-30)</h2>
-<ul>
-<li>Correctly deal with comments (spacing before comments, start comment with space)</li>
-<li>T more flexibly (<code><a href="../reference/test_collection.html">test_collection()</a></code> and friends now support <code>...</code>)</li>
-<li>Indention based on curly brackets</li>
-<li>Spacing across different levels of nesting (e.g. a space after <code>)</code> in <code>function(x) {...}</code>)</li>
-<li>Write tree structure to file via test_collection()` for easy understanding of the nested structure</li>
-<li>Outsource tokenise</li>
-<li>Account for situations where code does not start on line1</li>
-<li>Correctly style comments</li>
-<li>Add style_empty for tailored testing</li>
-<li>Initialize indent in create filler</li>
-<li>Adapt vignette and documentation to visitor concept</li>
-<li>Refine testing to use visiting approach</li>
-<li>Parse multiple expressions: Make nested approach wok on multiple expressions too.</li>
-<li>Internal: introducing the visitor concept instead of “looping” many times through whole nested structure.</li>
-<li>Integrate nested approach in top-level APIs <code>style_text</code> and friends via an additional argument. <code>flat</code>.</li>
-<li>Add tools for scalable testing. Transform <em>-in.R with a transformer function and check whether result corresponds to </em>-out.R</li>
-</ul>
+<div id="helpers" class="section level3">
+<h3 class="hasAnchor">
+<a href="#helpers" class="anchor"></a>Helpers</h3>
+<p>These are helper functions used to specify the style guides in use.</p>
+<pre><code><a href="../reference/math_token_spacing.html">specify_math_token_spacing(
+  zero = NULL, 
+  one = c("'+'", "'-'", "'*'", "'/'", "'^'")
+)
+
+specify_reindention(
+  regex_pattern = NULL, 
+  indention = 0, 
+  comments_only = TRUE
+)</a></code></pre>
+<p>These are helper functions that simply forward to the helper functions above.</p>
+<pre><code>tidyverse_reindention()
+tidyverse_math_token_spacing())</code></pre>
 </div>
-    <div id="styler-0-0-4-2017-06-15" class="section level2">
-<h2 class="hasAnchor">
-<a href="#styler-0-0-4-2017-06-15" class="anchor"></a>styler 0.0-4 (2017-06-15)</h2>
-<ul>
-<li>Fix <code>README.Rmd</code> for compatibility with pkgdown.</li>
-</ul>
-</div>
-    <div id="styler-0-0-3-2017-06-15" class="section level2">
-<h2 class="hasAnchor">
-<a href="#styler-0-0-3-2017-06-15" class="anchor"></a>styler 0.0-3 (2017-06-15)</h2>
-<ul>
-<li>Technical release for creation of pkgdown documentation.</li>
-</ul>
-</div>
-    <div id="styler-0-0-2-2017-06-15" class="section level2">
-<h2 class="hasAnchor">
-<a href="#styler-0-0-2-2017-06-15" class="anchor"></a>styler 0.0-2 (2017-06-15)</h2>
-<ul>
-<li>Technical release for creation of pkgdown documentation.</li>
-</ul>
-</div>
-    <div id="styler-0-0-1-2017-06-15" class="section level2">
-<h2 class="hasAnchor">
-<a href="#styler-0-0-1-2017-06-15" class="anchor"></a>styler 0.0-1 (2017-06-15)</h2>
-<p>Initial release, work in progress.</p>
-<ul>
-<li>Create and serialize nested parse data.</li>
-<li>Internal support for indention of expressions with parentheses.</li>
-<li>Adding and removing spaces around operators on flat parse data.</li>
-</ul>
 </div>
     </div>
   </div>
@@ -232,14 +190,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#styler-0-0-8-2017-08-24">0.0-8</a></li>
-        <li><a href="#styler-0-0-7-2017-07-27">0.0-7</a></li>
-        <li><a href="#styler-0-0-6-2017-07-10">0.0-6</a></li>
-        <li><a href="#styler-0-0-5-2017-06-30">0.0-5</a></li>
-        <li><a href="#styler-0-0-4-2017-06-15">0.0-4</a></li>
-        <li><a href="#styler-0-0-3-2017-06-15">0.0-3</a></li>
-        <li><a href="#styler-0-0-2-2017-06-15">0.0-2</a></li>
-        <li><a href="#styler-0-0-1-2017-06-15">0.0-1</a></li>
+        <li><a href="#styler-0-1-0-2017-12-05">0.1.0</a></li>
       </ul>
     </div>
   </div>

@@ -52,7 +52,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -77,6 +77,9 @@
       <a href="../articles/gsoc_proposal/manipulating_nested_parse_data.html">Manipulating the nested parse table</a>
     </li>
     <li>
+      <a href="../articles/introducing_styler.html">An introduction to styler</a>
+    </li>
+    <li>
       <a href="../articles/performance_improvements.html">Performance Improvements</a>
     </li>
   </ul>
@@ -88,7 +91,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/krlmlr/styler">
+  <a href="https://github.com/r-lib/styler">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -109,26 +112,39 @@
 
     
     <p>styler allows you to format .R files, packages or entire R source trees
-according to a style guide. See the INDEX for more information.</p>
+according to a style guide.
+The following functions can be used for styling:</p><ul>
+<li><p><code><a href='style_text.html'>style_text()</a></code> to style a character vector.</p></li>
+<li><p><code><a href='style_file.html'>style_file()</a></code> to style a single .R file.</p></li>
+<li><p><code><a href='style_dir.html'>style_dir()</a></code> to style all .R files in a directory.</p></li>
+<li><p><code><a href='style_pkg.html'>style_pkg()</a></code> to style the source files of an R package.</p></li>
+<li><p><a href='styler_addins.html'>styler_addins</a> (RStudio Addins) to style either selected code or the
+active file.</p></li>
+</ul>
     
 
         
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p>Useful links:</p><ul>
-<li><p><a href='https://github.com/krlmlr/styler'>https://github.com/krlmlr/styler</a></p></li>
-<li><p><a href='http://krlmlr.github.io/styler'>http://krlmlr.github.io/styler</a></p></li>
-<li><p>Report bugs at <a href='https://github.com/krlmlr/styler/issues'>https://github.com/krlmlr/styler/issues</a></p></li>
+<li><p><a href='https://github.com/r-lib/styler'>https://github.com/r-lib/styler</a></p></li>
+<li><p><a href='https://r-lib.github.io/styler/'>https://r-lib.github.io/styler/</a></p></li>
+<li><p>Report bugs at <a href='https://github.com/r-lib/styler/issues'>https://github.com/r-lib/styler/issues</a></p></li>
 </ul>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='style_text.html'>style_text</a></span>(<span class='st'>"call( 1)"</span>)</div><div class='output co'>#&gt; call(1)</div><div class='input'><span class='fu'><a href='style_text.html'>style_text</a></span>(<span class='st'>"1    + 1"</span>, <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; 1    + 1</div><div class='input'><span class='fu'><a href='style_text.html'>style_text</a></span>(<span class='st'>"a%&gt;%b"</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"spaces"</span>)</div><div class='output co'>#&gt; a %&gt;% b</div><div class='input'><span class='fu'><a href='style_text.html'>style_text</a></span>(<span class='st'>"a%&gt;%b; a"</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"line_breaks"</span>)</div><div class='output co'>#&gt; a %&gt;% b; a</div><div class='input'><span class='fu'><a href='style_text.html'>style_text</a></span>(<span class='st'>"a%&gt;%b; a"</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"tokens"</span>)</div><div class='output co'>#&gt; a %&gt;% b()
+#&gt; a</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     

@@ -52,7 +52,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -77,6 +77,9 @@
       <a href="../articles/gsoc_proposal/manipulating_nested_parse_data.html">Manipulating the nested parse table</a>
     </li>
     <li>
+      <a href="../articles/introducing_styler.html">An introduction to styler</a>
+    </li>
+    <li>
       <a href="../articles/performance_improvements.html">Performance Improvements</a>
     </li>
   </ul>
@@ -88,7 +91,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/krlmlr/styler">
+  <a href="https://github.com/r-lib/styler">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -106,7 +109,7 @@
     <div class="page-header">
       <h1>
         Reference
-        <small>version&nbsp;0.0-8</small>
+        <small>version&nbsp;1.0.0</small>
       </h1>
     </div>
 
@@ -128,111 +131,9 @@
         <tr>
           <!--  -->
           <td>
-            <p><code><a href="add_spaces_or_newlines.html">add_newlines</a></code> <code><a href="add_spaces_or_newlines.html">add_spaces</a></code> </p>
+            <p><code><a href="construct_vertical.html">construct_vertical</a></code> </p>
           </td>
-          <td><p>Concentrate newlines or spaces in a string</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="add_token_terminal.html">add_terminal_token_after</a></code> <code><a href="add_token_terminal.html">add_terminal_token_before</a></code> </p>
-          </td>
-          <td><p>Add information about previous / next token to each terminal</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="apply_ref_indention_one.html">apply_ref_indention_one</a></code> </p>
-          </td>
-          <td><p>Applying reference indention of a target token</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="apply_ref_indention.html">apply_ref_indention</a></code> </p>
-          </td>
-          <td><p>Apply reference indention to tokens</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="apply_transformers.html">apply_transformers</a></code> </p>
-          </td>
-          <td><p>Apply transformers to a parse table</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="bind_with_child.html">bind_with_child</a></code> </p>
-          </td>
-          <td><p>Bind a parse table with one of its children</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="character_to_ordered.html">character_to_ordered</a></code> </p>
-          </td>
-          <td><p>Convert a character vector to an ordered factor</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="choose_indention.html">choose_indention</a></code> </p>
-          </td>
-          <td><p>Choose the indention method for the tokens</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="combine_children.html">combine_children</a></code> </p>
-          </td>
-          <td><p>Combine child and internal child</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="compute_indent_indices.html">compute_indent_indices</a></code> </p>
-          </td>
-          <td><p>Compute the indices that need indention</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="compute_parse_data_nested.html">compute_parse_data_nested</a></code> </p>
-          </td>
-          <td><p>Obtain a nested parse table from a character vector</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="construct_out.html">construct_out</a></code> </p>
-          </td>
-          <td><p>Construct *-out.R from a *-in.R</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="construct_tree.html">construct_tree</a></code> </p>
-          </td>
-          <td><p>Construct paths of a tree object given the paths of *-in.R files</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="context_to_terminals.html">context_to_terminals</a></code> </p>
-          </td>
-          <td><p>Propagate context to terminals</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="context_towards_terminals.html">context_towards_terminals</a></code> </p>
-          </td>
-          <td><p>Update the a parse table given outer context</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="create_filler.html">create_filler</a></code> </p>
-          </td>
-          <td><p>Enrich parse table with space and linebreak information</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="create_node_from_nested_root.html">create_node_from_nested_root</a></code> </p>
-          </td>
-          <td><p>Convert a nested tibble into a node tree</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="create_node_from_nested.html">create_node_from_nested</a></code> </p>
-          </td>
-          <td><p>Create node from nested parse data</p></td>
+          <td><p>Construct an object of class vertical</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -242,165 +143,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="create_tree.html">create_tree</a></code> </p>
+            <p><code><a href="math_token_spacing.html">specify_math_token_spacing</a></code> <code><a href="math_token_spacing.html">tidyverse_math_token_spacing</a></code> </p>
           </td>
-          <td><p>Create a tree from text</p></td>
+          <td><p>Specify spacing around math tokens</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="enhance_mapping_special.html">enhance_mapping_special</a></code> </p>
+            <p><code><a href="reindention.html">specify_reindention</a></code> <code><a href="reindention.html">tidyverse_reindention</a></code> </p>
           </td>
-          <td><p>Enhance the mapping of text to the token "SPECIAL"</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="enrich_terminals.html">enrich_terminals</a></code> </p>
-          </td>
-          <td><p>Enrich flattened parse table</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="extract_terminals.html">extract_terminals</a></code> </p>
-          </td>
-          <td><p>Extract terminal tokens</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="flatten_operators_one.html">flatten_operators_one</a></code> </p>
-          </td>
-          <td><p>Flatten one level of nesting with its child</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="flatten_operators.html">flatten_operators</a></code> </p>
-          </td>
-          <td><p>Flatten some token in the nested parse table based on operators</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="flatten_pd.html">flatten_pd</a></code> </p>
-          </td>
-          <td><p>Flatten a parse table</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="lookup_new_special.html">lookup_new_special</a></code> </p>
-          </td>
-          <td><p>lookup which new tokens were created from "SPECIAL"</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="make_transformer.html">make_transformer</a></code> </p>
-          </td>
-          <td><p>Closure to return a transformer function</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="needs_indention_one.html">needs_indention_one</a></code> </p>
-          </td>
-          <td><p>Check whether indention is needed</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="needs_indention.html">needs_indention</a></code> </p>
-          </td>
-          <td><p>Check whether indention is needed</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nest_parse_data.html">nest_parse_data</a></code> </p>
-          </td>
-          <td><p>Nest a flat parse table</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="parse_transform_serialize.html">parse_transform_serialize</a></code> </p>
-          </td>
-          <td><p>Parse, transform and serialize text</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="pd_is.html">is_curly_expr</a></code> <code><a href="pd_is.html">is_function_call</a></code> </p>
-          </td>
-          <td><p>Check whether a parse table corresponds to a a certain expression</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="prettify_any.html">prettify_any</a></code> </p>
-          </td>
-          <td><p>Prettify R code in current working directory</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="prettify_one.html">prettify_one</a></code> </p>
-          </td>
-          <td><p>Prettify one R file</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="rep_char.html">rep_char</a></code> </p>
-          </td>
-          <td><p>Repeat elements of a character vector <code>times</code> times and collapse it</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="serialize_parse_data_flattened.html">serialize_parse_data_flattened</a></code> </p>
-          </td>
-          <td><p>Serialize flattened parse data</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="set_line_break_if_call_is_multi_line.html">set_line_break_after_opening_if_call_is_multi_line</a></code> <code><a href="set_line_break_if_call_is_multi_line.html">set_line_break_before_closing_if_call_is_multi_line</a></code> <code><a href="set_line_break_if_call_is_multi_line.html">remove_line_break_in_empty_fun_call</a></code> </p>
-          </td>
-          <td><p>Set line break for multi-line function calls</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="set_multi_line.html">set_multi_line</a></code> </p>
-          </td>
-          <td><p>Set the multi-line column</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="set_space_between_eq_sub_and_comma.html">set_space_between_eq_sub_and_comma</a></code> </p>
-          </td>
-          <td><p>Set space between EQ_SUB and "','"</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="set_space_between_levels.html">set_space_between_levels</a></code> </p>
-          </td>
-          <td><p>Set space between levels of nesting</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="set_spaces.html">set_spaces</a></code> </p>
-          </td>
-          <td><p>Helper for setting spaces</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="set_unindention_child.html">set_unindention_child</a></code> </p>
-          </td>
-          <td><p>Unindent a chlid if necessary</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="start_comments_with_space.html">start_comments_with_space</a></code> </p>
-          </td>
-          <td><p>Start comments with a space</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="start_on_line.html">start_on_line</a></code> </p>
-          </td>
-          <td><p>Get the start right</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="style_active_file.html">style_active_file</a></code> </p>
-          </td>
-          <td><p>Style the active file</p></td>
+          <td><p>Specify what is re-indented how</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -412,7 +163,13 @@
           <td>
             <p><code><a href="style_file.html">style_file</a></code> </p>
           </td>
-          <td><p>Style a file</p></td>
+          <td><p>Style <code>.R</code> and/or <code>.Rmd</code> files</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="style_guides.html">style_guides</a></code> </p>
+          </td>
+          <td><p>Style guides</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -428,87 +185,21 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="styler_addins.html">style_active_file</a></code> <code><a href="styler_addins.html">style_selection</a></code> </p>
+          </td>
+          <td><p>Stylers for RStudio Addins</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="styler-package.html">styler-package</a></code> </p>
           </td>
           <td><p>Non-invasive pretty printing of R code</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="test_collection.html">test_collection</a></code> </p>
-          </td>
-          <td><p>Run a collection of tests</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="test_transformer.html">style_empty</a></code> <code><a href="test_transformer.html">style_indent_curly</a></code> <code><a href="test_transformer.html">style_indent_curly_round</a></code> <code><a href="test_transformer.html">style_op</a></code> </p>
-          </td>
-          <td><p>Transforming test input with a transformer function</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="tidyverse_style.html">tidyverse_style</a></code> </p>
           </td>
           <td><p>The tidyverse style</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="token_is_multi_line.html">token_is_multi_line</a></code> </p>
-          </td>
-          <td><p>Check whether a parse table is a multi-line token</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="tokenize.html">tokenize</a></code> </p>
-          </td>
-          <td><p>Obtain token table from text</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="transform_and_check.html">transform_and_check</a></code> </p>
-          </td>
-          <td><p>Transform a file an check the result</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="transform_files.html">transform_files</a></code> </p>
-          </td>
-          <td><p>Transform files with transformer functions</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="unindent_child.html">unindent_child</a></code> </p>
-          </td>
-          <td><p>Unindent a child</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="update_indention_ref.html">update_indention_ref_fun_call</a></code> <code><a href="update_indention_ref.html">update_indention_ref_fun_dec</a></code> </p>
-          </td>
-          <td><p>Update the indention reference</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="update_indention.html">indent_round</a></code> <code><a href="update_indention.html">indent_curly</a></code> <code><a href="update_indention.html">indent_op</a></code> <code><a href="update_indention.html">indent_eq_sub</a></code> <code><a href="update_indention.html">indent_assign</a></code> <code><a href="update_indention.html">indent_without_paren</a></code> </p>
-          </td>
-          <td><p>Update indention information of parse data</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="update_newlines.html">update_newlines</a></code> </p>
-          </td>
-          <td><p>Update the newlines attribute</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="visit_one.html">visit_one</a></code> </p>
-          </td>
-          <td><p>Transform a flat parse table with a list of transformers</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="visit.html">pre_visit</a></code> <code><a href="visit.html">post_visit</a></code> </p>
-          </td>
-          <td><p>Visit'em all</p></td>
         </tr>
       </tbody>
       </table>

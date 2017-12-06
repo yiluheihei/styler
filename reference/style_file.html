@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Style a file — style_file • styler</title>
+<title>Style <code>.R</code> and/or <code>.Rmd</code> files — style_file • styler</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -52,7 +52,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -77,6 +77,9 @@
       <a href="../articles/gsoc_proposal/manipulating_nested_parse_data.html">Manipulating the nested parse table</a>
     </li>
     <li>
+      <a href="../articles/introducing_styler.html">An introduction to styler</a>
+    </li>
+    <li>
       <a href="../articles/performance_improvements.html">Performance Improvements</a>
     </li>
   </ul>
@@ -88,7 +91,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/krlmlr/styler">
+  <a href="https://github.com/r-lib/styler">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -104,11 +107,11 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Style a file</h1>
+    <h1>Style <code>.R</code> and/or <code>.Rmd</code> files</h1>
     </div>
 
     
-    <p>Performs various substitutions in the <code>.R</code> file specified.
+    <p>Performs various substitutions in the files specified.
 Carefully examine the results after running this function!</p>
     
 
@@ -119,38 +122,81 @@ Carefully examine the results after running this function!</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>path</th>
-      <td><p>A path to a file to style.</p></td>
+      <td><p>A character vector with paths to files to style.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Passed on to the <code>style</code> function.</p></td>
+      <td><p>Arguments passed on to the <code>style</code> function.</p></td>
     </tr>
     <tr>
       <th>style</th>
       <td><p>A function that creates a style guide to use, by default
-<code><a href='tidyverse_style.html'>tidyverse_style()</a></code> (without the parentheses). Will not be used further
-except to construct the argument <code>transformers</code>.</p></td>
+<code><a href='tidyverse_style.html'>tidyverse_style()</a></code> (without the parentheses). Not used
+further except to construct the argument <code>transformers</code>. See
+<code><a href='style_guides.html'>style_guides()</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>transformers</th>
-      <td><p>A set of transformer functions.</p></td>
+      <td><p>A set of transformer functions. This argument is most
+conveniently constructed via the <code>style</code> argument and <code>...</code>. See
+'Examples'.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    
+    <p>Invisibly returns a data frame that indicates for each file considered for
+styling whether or not it was actually changed.</p>
+    
+    <h2 class="hasAnchor" id="warning"><a class="anchor" href="#warning"></a>Warning</h2>
+
+    
+    <p>This function overwrites files (if styling results in a change of the
+code to be formatted). It is strongly suggested to only style files
+that are under version control or to create a backup copy.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p>Other stylers: <code><a href='style_dir.html'>style_dir</a></code>,
-  <code><a href='style_pkg.html'>style_pkg</a></code>, <code><a href='style_text.html'>style_text</a></code></p>
+  <code><a href='style_pkg.html'>style_pkg</a></code>, <code><a href='style_text.html'>style_text</a></code>,
+  <code><a href='styler_addins.html'>styler_addins</a></code></p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># the following is identical but the former is more convenient:</span>
+<span class='no'>file</span> <span class='kw'>&lt;-</span> <span class='fu'>tempfile</span>(<span class='st'>"styler"</span>, <span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>".R"</span>)
+<span class='kw pkg'>enc</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/enc/topics/write_lines_enc'>write_lines_enc</a></span>(<span class='st'>"1++1"</span>, <span class='no'>file</span>)
+<span class='fu'>style_file</span>(<span class='no'>file</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='no'>tidyverse_style</span>, <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Styling  1  files:
+#&gt;  styler167e5b2060f9.R ℹ 
+#&gt; ────────────────────────────────────────
+#&gt; Status	Count	Legend 
+#&gt; ✔ 	0	File unchanged.
+#&gt; ℹ 	1	File changed.
+#&gt; ✖ 	0	Styling threw an eror.
+#&gt; ────────────────────────────────────────
+#&gt; Please review the changes carefully!</div><div class='input'><span class='fu'>style_file</span>(<span class='no'>file</span>, <span class='kw'>transformers</span> <span class='kw'>=</span> <span class='fu'><a href='tidyverse_style.html'>tidyverse_style</a></span>(<span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; Styling  1  files:
+#&gt;  styler167e5b2060f9.R ✔ 
+#&gt; ────────────────────────────────────────
+#&gt; Status	Count	Legend 
+#&gt; ✔ 	1	File unchanged.
+#&gt; ℹ 	0	File changed.
+#&gt; ✖ 	0	Styling threw an eror.
+#&gt; ────────────────────────────────────────</div><div class='input'><span class='kw pkg'>enc</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/enc/topics/read_lines_enc'>read_lines_enc</a></span>(<span class='no'>file</span>)</div><div class='output co'>#&gt; [1] "1 + +1"</div><div class='input'><span class='fu'>unlink</span>(<span class='no'>file</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#warning">Warning</a></li>
+
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
