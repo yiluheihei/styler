@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Performance Improvements • styler</title>
-<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -95,7 +95,7 @@
 <div class="contents">
 <p>We want to make styler faster.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(styler)
-microbenchmark<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(
+microbenchmark::<span class="kw">microbenchmark</span>(
   <span class="dt">base =</span> <span class="kw"><a href="../reference/style_file.html">style_file</a></span>(<span class="st">"tests/testthat/indention_multiple/overall-in.R"</span>),
   <span class="dt">times =</span> <span class="dv">2</span>
 )
@@ -103,7 +103,7 @@ microbenchmark<span class="op">::</span><span class="kw"><a href="http://www.rdo
 <span class="co">#&gt;  expr      min       lq     mean   median       uq      max neval</span>
 <span class="co">#&gt;  base 4.131253 4.131253 4.172017 4.172017 4.212781 4.212781     2</span></code></pre></div>
 <p>Replacing mutate statments.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">microbenchmark<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">microbenchmark::<span class="kw">microbenchmark</span>(
   <span class="dt">base =</span> <span class="kw"><a href="../reference/style_file.html">style_file</a></span>(<span class="st">"tests/testthat/indention_multiple/overall-in.R"</span>),
   <span class="dt">times =</span> <span class="dv">2</span>
 )
@@ -111,7 +111,7 @@ microbenchmark<span class="op">::</span><span class="kw"><a href="http://www.rdo
 <span class="co">#&gt;  expr     min      lq     mean   median       uq      max neval</span>
 <span class="co">#&gt;  base 2.13616 2.13616 2.223659 2.223659 2.311158 2.311158     2</span></code></pre></div>
 <p>Move <code>opening</code> argument out of needs indention.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">microbenchmark<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">microbenchmark::<span class="kw">microbenchmark</span>(
   <span class="dt">base =</span> <span class="kw"><a href="../reference/style_file.html">style_file</a></span>(<span class="st">"tests/testthat/indention_multiple/overall-in.R"</span>),
   <span class="dt">times =</span> <span class="dv">5</span>
 )
@@ -120,7 +120,7 @@ microbenchmark<span class="op">::</span><span class="kw"><a href="http://www.rdo
 <span class="co">#&gt;  expr     min       lq     mean   median       uq      max neval</span>
 <span class="co">#&gt;  base 2.18097 2.184721 2.225294 2.200893 2.241799 2.318089     5</span></code></pre></div>
 <p>Dropping unnecessary select and arrange stuffstatments</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">microbenchmark<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">microbenchmark::<span class="kw">microbenchmark</span>(
   <span class="dt">base =</span> <span class="kw"><a href="../reference/style_file.html">style_file</a></span>(<span class="st">"tests/testthat/indention_multiple/overall-in.R"</span>),
   <span class="dt">times =</span> <span class="dv">5</span>
 )
@@ -128,7 +128,7 @@ microbenchmark<span class="op">::</span><span class="kw"><a href="http://www.rdo
 <span class="co">#&gt;  expr      min       lq     mean   median       uq      max neval</span>
 <span class="co">#&gt;  base 2.109271 2.134377 2.147821 2.158567 2.165384 2.171505     5</span></code></pre></div>
 <p>Some more stuff (early return, purr)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">microbenchmark<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">microbenchmark::<span class="kw">microbenchmark</span>(
   <span class="dt">base =</span> <span class="kw"><a href="../reference/style_file.html">style_file</a></span>(<span class="st">"tests/testthat/indention_multiple/overall-in.R"</span>),
   <span class="dt">times =</span> <span class="dv">5</span>
 )

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Manipulating the nested parse table • styler</title>
-<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../../pkgdown.css" rel="stylesheet">
 <script src="../../jquery.sticky-kit.min.js"></script><script src="../../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -87,7 +87,7 @@
       <h1>Manipulating the nested parse table</h1>
                         <h4 class="author">Lorenz Walthert</h4>
             
-            <h4 class="date">2017-12-06</h4>
+            <h4 class="date">2017-12-30</h4>
           </div>
 
     
@@ -99,7 +99,7 @@
 <pre><code>library("dplyr")
 library("purrr")
 pkgload::load_all()</code></pre>
-<p>This vignette builds on the vignette “Data Structures” and discusses how to go forward with the nested structure of the parse data. In order to compute the white space information in a nested data structure, we use a <a href="https://en.wikipedia.org/wiki/Visitor_pattern">visitor approach</a> to separate the algorithm (computing white space information and later apply transformations) from the object (nested data structure). The function <code>create_filler()</code> (name depreciated, now called <code>initialize_attributes()</code>) can then be used to compute current white space information on every level of nesting within the nested parse data if applied in combination with the visitor. In the sequel, a parse table at one level of nesting will be denoted with the term <em>nest</em>, which always represents a complete expression. Our visiting functions <code>pre_visit()</code> and <code>post_visit()</code> take an object to operate on and a list of functions. Concretely, the object is the nested parse table. Each function is applied at each level of nesting nesting before the next level of nesting is entered. You can find out more about the visitor on the help file for <code>visit</code> (note that this function is not exported by styler). pre_visit</p>
+<p>This vignette builds on the vignette “Data Structures” and discusses how to go forward with the nested structure of the parse data. In order to compute the white space information in a nested data structure, we use a <a href="https://en.wikipedia.org/wiki/Visitor_pattern">visitor approach</a> to separate the algorithm (computing white space information and later apply transformations) from the object (nested data structure). The function <code>create_filler()</code> (name depreciated, now called <code><a href="../../reference/default_style_guide_attributes.html">default_style_guide_attributes()</a></code>) can then be used to compute current white space information on every level of nesting within the nested parse data if applied in combination with the visitor. In the sequel, a parse table at one level of nesting will be denoted with the term <em>nest</em>, which always represents a complete expression. Our visiting functions <code><a href="../../reference/visit.html">pre_visit()</a></code> and <code><a href="../../reference/visit.html">post_visit()</a></code> take an object to operate on and a list of functions. Concretely, the object is the nested parse table. Each function is applied at each level of nesting nesting before the next level of nesting is entered. You can find out more about the visitor on the help file for <code>visit</code> (note that this function is not exported by styler). pre_visit</p>
 <pre><code>## function(pd_nested, funs) {
 ##   if (is.null(pd_nested)) return()
 ##   pd_transformed &lt;- visit_one(pd_nested, funs)
@@ -258,7 +258,7 @@ serialize_parse_data_nested
 ## }
 ## &lt;environment: namespace:styler&gt;</code></pre>
 <p>Before we are done, we need to add information regarding indention to the parse table. We can add indention after every line break that comes after a round bracket with <code>indent_round()</code>. And then serialize it.</p>
-<pre><code>pre_visit(pd_nested, 
+<pre><code><a href="../../reference/visit.html">pre_visit(pd_nested, 
                c(create_filler, 
                  purrr::partial(indent_round, indent_by = 2)))
 
@@ -268,7 +268,7 @@ serialize_parse_data_nested
 ## 1     1     1     1    47    49      0  expr    FALSE            
 ## # ... with 10 more variables: token_before &lt;chr&gt;, token_after &lt;chr&gt;,
 ## #   internal &lt;lgl&gt;, child &lt;list&gt;, newlines &lt;int&gt;, lag_newlines &lt;int&gt;,
-## #   spaces &lt;int&gt;, multi_line &lt;lgl&gt;, indention_ref_id &lt;lgl&gt;, indent &lt;dbl&gt;</code></pre>
+## #   spaces &lt;int&gt;, multi_line &lt;lgl&gt;, indention_ref_id &lt;lgl&gt;, indent &lt;dbl&gt;</a></code></pre>
 <p>We can see how indention works with a more complicated example</p>
 <pre><code>indented &lt;- c(
   "call(", 
