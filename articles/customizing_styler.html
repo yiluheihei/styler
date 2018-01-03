@@ -112,11 +112,12 @@
 ## [7] "reindention"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(<span class="kw"><a href="../reference/tidyverse_style.html">tidyverse_style</a></span>(), <span class="dt">give.attr =</span> <span class="ot">FALSE</span>, <span class="dt">list.len =</span> <span class="dv">3</span>)</code></pre></div>
 <pre><code>## List of 7
-##  $ initialize       :function (pd_flat)  
+##  $ initialize       :List of 1
+##   ..$ initialize:function (pd_flat)  
 ##  $ line_break       :List of 8
-##   ..$ remove_line_break_before_curly_opening                                                                                                                                                          :function (pd)  
-##   ..$ if (strict) remove_line_break_before_round_closing_after_curly else identity                                                                                                                    :function (pd)  
-##   ..$ if (strict) remove_line_break_before_round_closing_fun_dec else identity                                                                                                                        :function (pd)  
+##   ..$ remove_line_break_before_curly_opening            :function (pd)  
+##   ..$ remove_line_break_before_round_closing_after_curly:function (pd)  
+##   ..$ remove_line_break_before_round_closing_fun_dec    :function (pd)  
 ##   .. [list output truncated]
 ##  $ space            :List of 24
 ##   ..$ partial(indent_braces, indent_by = indent_by)                                                  :function (...)  
@@ -169,7 +170,9 @@ pd$child[[<span class="dv">1</span>]] %&gt;%
 <pre><code>## [1] TRUE</code></pre>
 <p>Now let’s do the whole styling of a string with just this one transformer introduced above. We do this by first creating a style guide with the designated wrapper function <code><a href="../reference/create_style_guide.html">create_style_guide()</a></code>. It takes transformer functions as input and returns them in a named list that meets the formal requirements for styling functions.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">space_after_opening_style &lt;-<span class="st"> </span>function(are_you_sure) {
-  <span class="kw"><a href="../reference/create_style_guide.html">create_style_guide</a></span>(<span class="dt">space =</span> if (are_you_sure) styler:::remove_space_after_opening_paren)
+  <span class="kw"><a href="../reference/create_style_guide.html">create_style_guide</a></span>(<span class="dt">space =</span> tibble::<span class="kw"><a href="http://dplyr.tidyverse.org/reference/reexports.html">lst</a></span>(<span class="dt">remove_space_after_opening_paren =</span> 
+    if (are_you_sure) styler:::remove_space_after_opening_paren
+  ))
 }
 <span class="kw"><a href="../reference/style_text.html">style_text</a></span>(<span class="st">"call( 1,1)"</span>, <span class="dt">style =</span> space_after_opening_style, <span class="dt">are_you_sure =</span> <span class="ot">FALSE</span>)  </code></pre></div>
 <pre><code>## call( 1,1)</code></pre>
@@ -266,7 +269,7 @@ pd$child[[<span class="dv">1</span>]] %&gt;%
 }</code></pre></div>
 <p>Almost done. Now, the last thing we need to do is to use <code><a href="../reference/create_style_guide.html">create_style_guide()</a></code> to create our style guide consisting of that function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">set_line_break_before_curly_opening_style &lt;-<span class="st"> </span>function() {
-  <span class="kw"><a href="../reference/create_style_guide.html">create_style_guide</a></span>(<span class="dt">line_break =</span> set_line_break_before_curly_opening)
+  <span class="kw"><a href="../reference/create_style_guide.html">create_style_guide</a></span>(<span class="dt">line_break =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/reexports.html">lst</a></span>(set_line_break_before_curly_opening))
 }</code></pre></div>
 <p>Now you can style your string according to it.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/style_text.html">style_text</a></span>(code, <span class="dt">style =</span> set_line_break_before_curly_opening_style)</code></pre></div>

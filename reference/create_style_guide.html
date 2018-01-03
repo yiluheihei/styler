@@ -168,7 +168,7 @@ conveniently constructed using <code><a href='reindention.html'>specify_reindent
   <span class='no'>pd_flat</span>
 }
 <span class='no'>set_line_break_before_curly_opening_style</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>() {
-  <span class='fu'>create_style_guide</span>(<span class='kw'>line_break</span> <span class='kw'>=</span> <span class='no'>set_line_break_before_curly_opening</span>)
+  <span class='fu'>create_style_guide</span>(<span class='kw'>line_break</span> <span class='kw'>=</span> <span class='kw pkg'>tibble</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/tibble'>lst</a></span>(<span class='no'>set_line_break_before_curly_opening</span>))
 }
 <span class='fu'><a href='style_text.html'>style_text</a></span>(<span class='st'>"a &lt;- function(x) { x }"</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='no'>set_line_break_before_curly_opening_style</span>)</div><div class='output co'>#&gt; a &lt;- function(x)
 #&gt; { x }</div></pre>
