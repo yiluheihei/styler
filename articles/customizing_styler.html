@@ -254,13 +254,13 @@ pd$child[[<span class="dv">1</span>]] %&gt;%
 <p>The token of interest here has id number 10. Let’s navigate there. Since line break rules manipulate the lags <em>before</em> the token, we need to change <code>lag_newlines</code> at the token “‘{’”.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pd$child[[<span class="dv">1</span>]]$child[[<span class="dv">3</span>]]$child[[<span class="dv">5</span>]]</code></pre></div>
 <pre><code>## # A tibble: 3 x 15
-##      id pos_id line1  col1 line2  col2 pare… token term… text  short toke…
-##   &lt;int&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;lgl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
-## 1     9     11     1    24     1    24    19 '{'   T     {     {     ')'  
-## 2    16     12     1    26     1    30    19 expr  F     ""    ""    &lt;NA&gt; 
-## 3    15     18     1    32     1    32    19 '}'   T     }     }     NUM_…
-## # ... with 3 more variables: token_after &lt;chr&gt;, internal &lt;lgl&gt;,
-## #   child &lt;list&gt;</code></pre>
+##      id pos_id line1  col1 line2  col2 parent token terminal text  short
+##   &lt;int&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt; &lt;lgl&gt;    &lt;chr&gt; &lt;chr&gt;
+## 1     9     11     1    24     1    24     19 '{'   T        {     {    
+## 2    16     12     1    26     1    30     19 expr  F        ""    ""   
+## 3    15     18     1    32     1    32     19 '}'   T        }     }    
+## # ... with 4 more variables: token_before &lt;chr&gt;, token_after &lt;chr&gt;,
+## #   internal &lt;lgl&gt;, child &lt;list&gt;</code></pre>
 <p>Remember what we said above: A transformer takes a flat parse table as input, updates it and returns it. So here it’s actually simple:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">set_line_break_before_curly_opening &lt;-<span class="st"> </span>function(pd_flat) {
   op &lt;-<span class="st"> </span>pd_flat$token %in%<span class="st"> "'{'"</span>
