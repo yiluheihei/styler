@@ -114,7 +114,15 @@
     <p>Either use the raw indention, which is just the spaces computed between
 the first token on a new line and the token before it, or use the indention
 computed according to the transformer used, which is stored in the column
-<code>indention</code>.</p>
+<code>indention</code>.
+All indention information will be combined with the space information for
+the first token on a new line.
+If <code>use_raw_indention</code> is set, information in the column <code>indention</code> will
+be discarded anyways. If it is not set, the first token on a new line will
+"inherit" the indention of the whole line.
+The column <code>indention</code> will be removed since all information necessary is
+contained in the spacing information of the first token on a new line and
+the position of the tokens will not be changed anymore at this stage.</p>
     
 
     <pre class="usage"><span class='fu'>choose_indention</span>(<span class='no'>flattened_pd</span>, <span class='no'>use_raw_indention</span>)</pre>
@@ -134,26 +142,13 @@ should be used.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>All indention information will be combined with the space information for
-the first token on a new line.
-If <code>use_raw_indention</code> is set, information in the column <code>indention</code> will
-be discarded anyways. If it is not set, the first token on a new line will
-"inherit" the indention of the whole line.
-The column <code>indention</code> will be removed since all information necessary is
-contained in the spacing information of the first token on a new line and
-the position of the tokens will not be changed anymore at this stage.</p>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#details">Details</a></li>
-          </ul>
+                </ul>
 
   </div>
 </div>

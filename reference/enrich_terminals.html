@@ -135,16 +135,16 @@ should be used.</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Since we have only terminal tokens now, the line on which a token
-starts we also be the line on which it ends. We call <code>line1</code> the line on
-which the token starts. <code>line1</code> has the same meaning as <code>line1</code> that can be
-found in a flat parse table (see <code><a href='tokenize.html'>tokenize()</a></code>), just that the <code>line1</code>
-created by <code>enrich_terminals()</code> is the updated version of the former
-<code>line1</code>. The same applies for <code>col1</code> and <code>col2</code>. Note that this function
-does remove the columns <code>indent</code> and <code>spaces.</code> All information of the former
-is stored in <code>lag_spaces</code> now. The later was removed because it is redundant
-after adding the column <code>lag_spaces</code>, which is more convenient to work with,
-in particular when serializing the parse table.</p>
+    <p>Since we have only terminal tokens now, the line on which a token starts we
+also be the line on which it ends. We call <code>line1</code> the line on which the
+token starts. <code>line1</code> has the same meaning as <code>line1</code> that can be found in a
+flat parse table (see <code><a href='tokenize.html'>tokenize()</a></code>), just that the <code>line1</code> created by
+<code>enrich_terminals()</code> is the updated version of the former <code>line1</code>. The same
+applies for <code>col1</code> and <code>col2</code>. Note that this function does remove the
+columns <code>indent</code> and <code>spaces.</code> All information of the former is stored in
+<code>lag_spaces</code> now. The later was removed because it is redundant after adding
+the column <code>lag_spaces</code>, which is more convenient to work with, in particular
+when serializing the parse table.</p>
     
 
   </div>
