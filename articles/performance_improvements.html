@@ -135,6 +135,22 @@ microbenchmark::<span class="kw">microbenchmark</span>(
 <span class="co">#&gt; Unit: milliseconds</span>
 <span class="co">#&gt;  expr      min       lq     mean   median       uq      max neval</span>
 <span class="co">#&gt;  base 930.4391 944.9253 969.2838 951.4632 951.6571 1067.934     5</span></code></pre></div>
+<p>Various changes (positive and negative in terms of speed)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">microbenchmark::<span class="kw">microbenchmark</span>(
+  <span class="dt">base =</span> <span class="kw"><a href="../reference/style_file.html">style_file</a></span>(<span class="st">"tests/testthat/indention_multiple/overall-in.R"</span>),
+  <span class="dt">times =</span> <span class="dv">10</span>
+)
+<span class="co">#&gt; Unit: seconds</span>
+<span class="co">#&gt; expr      min       lq     mean   median       uq      max neval</span>
+<span class="co">#&gt;  base 1.235749 1.259139 1.269869 1.269396 1.275887 1.330341    10</span></code></pre></div>
+<p>Removed tibble bottlenecks (tibble 1.4.2, <a href="https://github.com/tidyverse/tibble/pull/348" class="uri">https://github.com/tidyverse/tibble/pull/348</a>)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">microbenchmark::<span class="kw">microbenchmark</span>(
+  <span class="dt">base =</span> <span class="kw"><a href="../reference/style_file.html">style_file</a></span>(<span class="st">"tests/testthat/indention_multiple/overall-in.R"</span>),
+  <span class="dt">times =</span> <span class="dv">10</span>
+)
+<span class="co">#&gt; Unit: milliseconds</span>
+<span class="co">#&gt;  expr      min       lq     mean   median       uq      max neval</span>
+<span class="co">#&gt;  base 514.9392 520.5061 587.6329 530.3154 548.7248 989.3332    10</span></code></pre></div>
 </div>
   </div>
 
