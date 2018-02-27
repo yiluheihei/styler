@@ -123,9 +123,9 @@
 ##   ..$ remove_line_break_before_round_closing_fun_dec    :function (pd)  
 ##   .. [list output truncated]
 ##  $ space            :List of 25
-##   ..$ partial(indent_braces, indent_by = indent_by)                                                  :function (...)  
-##   ..$ partial(indent_op, indent_by = indent_by)                                                      :function (...)  
-##   ..$ partial(indent_eq_sub, indent_by = indent_by)                                                  :function (...)  
+##   ..$ indent_braces                     :function (...)  
+##   ..$ indent_op                         :function (...)  
+##   ..$ indent_eq_sub                     :function (...)  
 ##   .. [list output truncated]
 ##   [list output truncated]</code></pre>
 <p>We note that there are different types of transformer functions. <code>initialize</code> initializes some variables in the nested parse table (so it is not actually a transformer), and the other elements modify either spacing, line breaks or tokens. <code>use_raw_indention</code> is not a function, it is just an option. All transformer functions have a similar structure. Let’s take a look at one:</p>
@@ -148,10 +148,10 @@ pd$child[[<span class="dv">1</span>]] %&gt;%
 <pre><code>## # A tibble: 4 x 5
 ##   token terminal text  newlines spaces
 ##   &lt;chr&gt; &lt;lgl&gt;    &lt;chr&gt;    &lt;int&gt;  &lt;int&gt;
-## 1 expr  F        ""           0      0
-## 2 '('   T        (            0      1
-## 3 expr  F        ""           0      0
-## 4 ')'   T        )            0      0</code></pre>
+## 1 expr  FALSE    ""           0      0
+## 2 '('   TRUE     (            0      1
+## 3 expr  FALSE    ""           0      0
+## 4 ')'   TRUE     )            0      0</code></pre>
 <p><code><a href="../reference/default_style_guide_attributes.html">default_style_guide_attributes()</a></code> is called to initialize some variables, it does not actually transform the parse table.</p>
 <p>All the function <code>remove_space_after_opening_paren()</code> now does is to look for the opening bracket and set the column <code>spaces</code> of the token to zero. Note that it is very important to check whether there is also a line break following after that token. If so, <code>spaces</code> should not be touched because of the way <code>spaces</code> and <code>newlines</code> are defined. <code>spaces</code> are the number of spaces after a token and <code>newlines</code>. Hence, if a line break follows, spaces are not EOL spaces, but rather the spaces directly before the next token. If there was a line break after the token and the rule did not check for that, indention for the token following <code>(</code> would be removed. This would be unwanted for example if <code>use_raw_indention</code> is set to <code>TRUE</code> (which means indention should not be touched). If we apply the rule to our parse table, we can see that the column <code>spaces</code> changes and is now zero for all tokens:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">styler:::<span class="kw">remove_space_after_opening_paren</span>(pd$child[[<span class="dv">1</span>]]) %&gt;%
@@ -159,10 +159,10 @@ pd$child[[<span class="dv">1</span>]] %&gt;%
 <pre><code>## # A tibble: 4 x 5
 ##   token terminal text  newlines spaces
 ##   &lt;chr&gt; &lt;lgl&gt;    &lt;chr&gt;    &lt;int&gt;  &lt;int&gt;
-## 1 expr  F        ""           0      0
-## 2 '('   T        (            0      0
-## 3 expr  F        ""           0      0
-## 4 ')'   T        )            0      0</code></pre>
+## 1 expr  FALSE    ""           0      0
+## 2 '('   TRUE     (            0      0
+## 3 expr  FALSE    ""           0      0
+## 4 ')'   TRUE     )            0      0</code></pre>
 <p>All top-level styling functions have a <code>style</code> argument (which defaults to <code>tidyverse_style</code>). If you check out the help file, you can see that the argument <code>style</code> is only used to create the default <code>transformers</code> argument, which defaults to <code>style(...)</code>. This allows for the styling options to be set without having to specify them inside the function passed to <code>transformers</code>.</p>
 <p>Let’s clarify this with an example. The following yields the same result:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all.equal</span>(
@@ -259,9 +259,9 @@ pd$child[[<span class="dv">1</span>]] %&gt;%
 <pre><code>## # A tibble: 3 x 15
 ##      id pos_id line1  col1 line2  col2 parent token terminal text  short
 ##   &lt;int&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt; &lt;lgl&gt;    &lt;chr&gt; &lt;chr&gt;
-## 1     9     11     1    24     1    24     19 '{'   T        {     {    
-## 2    16     12     1    26     1    30     19 expr  F        ""    ""   
-## 3    15     18     1    32     1    32     19 '}'   T        }     }    
+## 1     9     11     1    24     1    24     19 '{'   TRUE     {     {    
+## 2    16     12     1    26     1    30     19 expr  FALSE    ""    ""   
+## 3    15     18     1    32     1    32     19 '}'   TRUE     }     }    
 ## # ... with 4 more variables: token_before &lt;chr&gt;, token_after &lt;chr&gt;,
 ## #   internal &lt;lgl&gt;, child &lt;list&gt;</code></pre>
 <p>Remember what we said above: A transformer takes a flat parse table as input, updates it and returns it. So here it’s actually simple:</p>

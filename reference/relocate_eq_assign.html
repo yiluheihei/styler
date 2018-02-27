@@ -163,26 +163,26 @@ wrap the the implementation <code><a href='relocate_eq_assign_nest.html'>relocat
     <pre class="examples"><div class='input'><span class='kw pkg'>styler</span><span class='kw ns'>:::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/styler/topics/get_parse_data'>get_parse_data</a></span>(<span class='st'>"a &lt;- b &lt;- 3"</span>)</div><div class='output co'>#&gt; # A tibble: 10 x 11
 #&gt;    line1  col1 line2  col2    id parent token       terminal text  pos_id short
 #&gt;  * &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;       &lt;lgl&gt;    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;
-#&gt;  1     1     1     1    11    11      0 expr        F        a &lt;-…      1 "a &lt;…
-#&gt;  2     1     1     1     1     1      3 SYMBOL      T        a          2 a    
-#&gt;  3     1     1     1     1     3     11 expr        F        a          3 a    
-#&gt;  4     1     3     1     4     2     11 LEFT_ASSIGN T        &lt;-         4 &lt;-   
-#&gt;  5     1     6     1    11    10     11 expr        F        b &lt;-…      5 "b &lt;…
-#&gt;  6     1     6     1     6     4      6 SYMBOL      T        b          6 b    
-#&gt;  7     1     6     1     6     6     10 expr        F        b          7 b    
-#&gt;  8     1     8     1     9     5     10 LEFT_ASSIGN T        &lt;-         8 &lt;-   
-#&gt;  9     1    11     1    11     7      8 NUM_CONST   T        3          9 3    
-#&gt; 10     1    11     1    11     8     10 expr        F        3         10 3    </div><div class='input'><span class='kw pkg'>styler</span><span class='kw ns'>:::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/styler/topics/get_parse_data'>get_parse_data</a></span>(<span class='st'>"a  = b = 3"</span>)</div><div class='output co'>#&gt; # A tibble: 8 x 11
+#&gt;  1     1     1     1    11    11      0 expr        FALSE    a &lt;-…      1 "a &lt;…
+#&gt;  2     1     1     1     1     1      3 SYMBOL      TRUE     a          2 a    
+#&gt;  3     1     1     1     1     3     11 expr        FALSE    a          3 a    
+#&gt;  4     1     3     1     4     2     11 LEFT_ASSIGN TRUE     &lt;-         4 &lt;-   
+#&gt;  5     1     6     1    11    10     11 expr        FALSE    b &lt;-…      5 "b &lt;…
+#&gt;  6     1     6     1     6     4      6 SYMBOL      TRUE     b          6 b    
+#&gt;  7     1     6     1     6     6     10 expr        FALSE    b          7 b    
+#&gt;  8     1     8     1     9     5     10 LEFT_ASSIGN TRUE     &lt;-         8 &lt;-   
+#&gt;  9     1    11     1    11     7      8 NUM_CONST   TRUE     3          9 3    
+#&gt; 10     1    11     1    11     8     10 expr        FALSE    3         10 3    </div><div class='input'><span class='kw pkg'>styler</span><span class='kw ns'>:::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/styler/topics/get_parse_data'>get_parse_data</a></span>(<span class='st'>"a  = b = 3"</span>)</div><div class='output co'>#&gt; # A tibble: 8 x 11
 #&gt;   line1  col1 line2  col2    id parent token     terminal text  pos_id short
 #&gt; * &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;     &lt;lgl&gt;    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;
-#&gt; 1     1     1     1     1     1      3 SYMBOL    T        a          1 a    
-#&gt; 2     1     1     1     1     3      0 expr      F        a          2 a    
-#&gt; 3     1     4     1     4     2      0 EQ_ASSIGN T        =          3 =    
-#&gt; 4     1     6     1     6     4      6 SYMBOL    T        b          4 b    
-#&gt; 5     1     6     1     6     6      0 expr      F        b          5 b    
-#&gt; 6     1     8     1     8     5      0 EQ_ASSIGN T        =          6 =    
-#&gt; 7     1    10     1    10     7      8 NUM_CONST T        3          7 3    
-#&gt; 8     1    10     1    10     8      0 expr      F        3          8 3    </div><div class='input'><span class='kw pkg'>styler</span><span class='kw ns'>:::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/styler/topics/get_parse_data'>get_parse_data</a></span>(
+#&gt; 1     1     1     1     1     1      3 SYMBOL    TRUE     a          1 a    
+#&gt; 2     1     1     1     1     3      0 expr      FALSE    a          2 a    
+#&gt; 3     1     4     1     4     2      0 EQ_ASSIGN TRUE     =          3 =    
+#&gt; 4     1     6     1     6     4      6 SYMBOL    TRUE     b          4 b    
+#&gt; 5     1     6     1     6     6      0 expr      FALSE    b          5 b    
+#&gt; 6     1     8     1     8     5      0 EQ_ASSIGN TRUE     =          6 =    
+#&gt; 7     1    10     1    10     7      8 NUM_CONST TRUE     3          7 3    
+#&gt; 8     1    10     1    10     8      0 expr      FALSE    3          8 3    </div><div class='input'><span class='kw pkg'>styler</span><span class='kw ns'>:::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/styler/topics/get_parse_data'>get_parse_data</a></span>(
   <span class='st'>"x = 5
   if(x &gt;= 5)
   y = TRUE else
@@ -190,16 +190,16 @@ wrap the the implementation <code><a href='relocate_eq_assign_nest.html'>relocat
 )</div><div class='output co'>#&gt; # A tibble: 26 x 11
 #&gt;    line1  col1 line2  col2    id parent token     terminal text    pos_id short
 #&gt;  * &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;     &lt;lgl&gt;    &lt;chr&gt;    &lt;int&gt; &lt;chr&gt;
-#&gt;  1     1     1     1     1     1      3 SYMBOL    T        x            1 x    
-#&gt;  2     1     1     1     1     3      0 expr      F        x            2 x    
-#&gt;  3     1     3     1     3     2      0 EQ_ASSIGN T        =            3 =    
-#&gt;  4     1     5     1     5     4      5 NUM_CONST T        5            4 5    
-#&gt;  5     1     5     1     5     5      0 expr      F        5            5 5    
-#&gt;  6     2     3     4    11    41      0 expr      F        "if(x …      6 "if(…
-#&gt;  7     2     3     2     4    11     41 IF        T        if           7 if   
-#&gt;  8     2     5     2     5    12     41 '('       T        (            8 (    
-#&gt;  9     2     6     2    11    19     41 expr      F        x &gt;= 5       9 "x &gt;…
-#&gt; 10     2     6     2     6    13     15 SYMBOL    T        x           10 x    
+#&gt;  1     1     1     1     1     1      3 SYMBOL    TRUE     x            1 x    
+#&gt;  2     1     1     1     1     3      0 expr      FALSE    x            2 x    
+#&gt;  3     1     3     1     3     2      0 EQ_ASSIGN TRUE     =            3 =    
+#&gt;  4     1     5     1     5     4      5 NUM_CONST TRUE     5            4 5    
+#&gt;  5     1     5     1     5     5      0 expr      FALSE    5            5 5    
+#&gt;  6     2     3     4    11    41      0 expr      FALSE    "if(x …      6 "if(…
+#&gt;  7     2     3     2     4    11     41 IF        TRUE     if           7 if   
+#&gt;  8     2     5     2     5    12     41 '('       TRUE     (            8 (    
+#&gt;  9     2     6     2    11    19     41 expr      FALSE    x &gt;= 5       9 "x &gt;…
+#&gt; 10     2     6     2     6    13     15 SYMBOL    TRUE     x           10 x    
 #&gt; # ... with 16 more rows</div><div class='input'><span class='kw pkg'>styler</span><span class='kw ns'>:::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/styler/topics/get_parse_data'>get_parse_data</a></span>(
   <span class='st'>"x &lt;- 5
   if(x &gt;= 5)
@@ -208,16 +208,16 @@ wrap the the implementation <code><a href='relocate_eq_assign_nest.html'>relocat
 )</div><div class='output co'>#&gt; # A tibble: 29 x 11
 #&gt;    line1  col1 line2  col2    id parent token       terminal text  pos_id short
 #&gt;  * &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;chr&gt;       &lt;lgl&gt;    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;
-#&gt;  1     1     1     1     6     7      0 expr        F        x &lt;-…      1 "x &lt;…
-#&gt;  2     1     1     1     1     1      3 SYMBOL      T        x          2 x    
-#&gt;  3     1     1     1     1     3      7 expr        F        x          3 x    
-#&gt;  4     1     3     1     4     2      7 LEFT_ASSIGN T        &lt;-         4 &lt;-   
-#&gt;  5     1     6     1     6     4      5 NUM_CONST   T        5          5 5    
-#&gt;  6     1     6     1     6     5      7 expr        F        5          6 5    
-#&gt;  7     2     3     4    12    38      0 expr        F        "if(…      7 "if(…
-#&gt;  8     2     3     2     4    10     38 IF          T        if         8 if   
-#&gt;  9     2     5     2     5    11     38 '('         T        (          9 (    
-#&gt; 10     2     6     2    11    18     38 expr        F        x &gt;=…     10 "x &gt;…
+#&gt;  1     1     1     1     6     7      0 expr        FALSE    x &lt;-…      1 "x &lt;…
+#&gt;  2     1     1     1     1     1      3 SYMBOL      TRUE     x          2 x    
+#&gt;  3     1     1     1     1     3      7 expr        FALSE    x          3 x    
+#&gt;  4     1     3     1     4     2      7 LEFT_ASSIGN TRUE     &lt;-         4 &lt;-   
+#&gt;  5     1     6     1     6     4      5 NUM_CONST   TRUE     5          5 5    
+#&gt;  6     1     6     1     6     5      7 expr        FALSE    5          6 5    
+#&gt;  7     2     3     4    12    38      0 expr        FALSE    "if(…      7 "if(…
+#&gt;  8     2     3     2     4    10     38 IF          TRUE     if         8 if   
+#&gt;  9     2     5     2     5    11     38 '('         TRUE     (          9 (    
+#&gt; 10     2     6     2    11    18     38 expr        FALSE    x &gt;=…     10 "x &gt;…
 #&gt; # ... with 19 more rows</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
