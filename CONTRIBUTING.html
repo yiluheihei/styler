@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Check whether indention is needed — needs_indention • styler</title>
+<title>CONTRIBUTING.md • styler</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -22,16 +22,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
-<link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
-<script src="../pkgdown.js"></script>
+<link href="pkgdown.css" rel="stylesheet">
+<script src="jquery.sticky-kit.min.js"></script>
+<script src="pkgdown.js"></script>
   
   
-<meta property="og:title" content="Check whether indention is needed — needs_indention" />
-
-<meta property="og:description" content="Checks for each potential trigger token in pd whether it actually should
-cause indention." />
-<meta name="twitter:card" content="summary" />
+<meta property="og:title" content="CONTRIBUTING.md" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -44,7 +40,7 @@ cause indention." />
   </head>
 
   <body>
-    <div class="container template-reference-topic">
+    <div class="container template-title-body">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -54,18 +50,18 @@ cause indention." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">styler</a>
+      <a class="navbar-brand" href="index.html">styler</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
+  <a href="index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -75,24 +71,24 @@ cause indention." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/customizing_styler.html">Customizing styler</a>
+      <a href="articles/customizing_styler.html">Customizing styler</a>
     </li>
     <li>
-      <a href="../articles/gsoc_proposal/data_structures.html">Data Structures</a>
+      <a href="articles/gsoc_proposal/data_structures.html">Data Structures</a>
     </li>
     <li>
-      <a href="../articles/gsoc_proposal/manipulating_nested_parse_data.html">Manipulating the nested parse table</a>
+      <a href="articles/gsoc_proposal/manipulating_nested_parse_data.html">Manipulating the nested parse table</a>
     </li>
     <li>
-      <a href="../articles/introducing_styler.html">An introduction to styler</a>
+      <a href="articles/introducing_styler.html">An introduction to styler</a>
     </li>
     <li>
-      <a href="../articles/performance_improvements.html">Performance Improvements</a>
+      <a href="articles/performance_improvements.html">Performance Improvements</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="news/index.html">News</a>
 </li>
       </ul>
       
@@ -112,47 +108,17 @@ cause indention." />
       </header>
 
       <div class="row">
-  <div class="col-md-9 contents">
+  <div class="contents col-md-12">
     <div class="page-header">
-    <h1>Check whether indention is needed</h1>
+      <h1>CONTRIBUTING.md</h1>
     </div>
 
-    
-    <p>Checks for each potential trigger token in <code>pd</code> whether it actually should
-cause indention.</p>
-    
-
-    <pre class="usage"><span class='fu'>needs_indention</span>(<span class='no'>pd</span>, <span class='no'>potential_triggers_pos</span>, <span class='kw'>other_trigger_tokens</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>pd</th>
-      <td><p>A parse table.</p></td>
-    </tr>
-    <tr>
-      <th>potential_triggers_pos</th>
-      <td><p>A vector with indices of the potential trigger
-tokens in <code>pd</code>.</p></td>
-    </tr>
-    <tr>
-      <th>other_trigger_tokens</th>
-      <td><p>Other tokens that are going to cause indention
-if on the same line as the token corresponding to <code>potential_trigger</code>.</p></td>
-    </tr>
-    </table>
-    
+<p>This project follows the contributing recommendations outlined by <a href="https://lorenzwalthert.github.io/saamwerk/">saamwerk</a>. In particular, issues labelled with <code>Status: Postponed</code> are closed even if they are not resolved.</p>
 
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-                </ul>
 
-  </div>
 </div>
+
 
       <footer>
       <div class="copyright">

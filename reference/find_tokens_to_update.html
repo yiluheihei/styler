@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Check whether indention is needed — needs_indention • styler</title>
+<title>Find the tokens to update when applying a reference indention — find_tokens_to_update • styler</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -27,10 +27,12 @@
 <script src="../pkgdown.js"></script>
   
   
-<meta property="og:title" content="Check whether indention is needed — needs_indention" />
+<meta property="og:title" content="Find the tokens to update when applying a reference indention — find_tokens_to_update" />
 
-<meta property="og:description" content="Checks for each potential trigger token in pd whether it actually should
-cause indention." />
+<meta property="og:description" content="Given a target token and a flattened parse table, the token for which the
+spacing information needs to be updated are computed. Since indention is
+already embeded in the column lag_spaces, only tokens at the beginning of
+a line are of concern." />
 <meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -114,42 +116,61 @@ cause indention." />
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Check whether indention is needed</h1>
+    <h1>Find the tokens to update when applying a reference indention</h1>
     </div>
 
     
-    <p>Checks for each potential trigger token in <code>pd</code> whether it actually should
-cause indention.</p>
+    <p>Given a target token and a flattened parse table, the token for which the
+spacing information needs to be updated are computed. Since indention is
+already embeded in the column <code>lag_spaces</code>, only tokens at the beginning of
+a line are of concern.</p>
     
 
-    <pre class="usage"><span class='fu'>needs_indention</span>(<span class='no'>pd</span>, <span class='no'>potential_triggers_pos</span>, <span class='kw'>other_trigger_tokens</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>find_tokens_to_update</span>(<span class='no'>flattened_pd</span>, <span class='no'>target_token</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>pd</th>
-      <td><p>A parse table.</p></td>
+      <th>flattened_pd</th>
+      <td><p>A flattened parse table.</p></td>
     </tr>
     <tr>
-      <th>potential_triggers_pos</th>
-      <td><p>A vector with indices of the potential trigger
-tokens in <code>pd</code>.</p></td>
-    </tr>
-    <tr>
-      <th>other_trigger_tokens</th>
-      <td><p>Other tokens that are going to cause indention
-if on the same line as the token corresponding to <code>potential_trigger</code>.</p></td>
+      <th>target_token</th>
+      <td><p>The index of the token from which the indention level
+should be applied to other tokens.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
+    <p>apply_ref_indention_one()</p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='style_text.html'>style_text</a></span>(<span class='st'>"function(a =
+  b,
+  dd
+) {}"</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"indention"</span>)</div><div class='output co'>#&gt; function(a =
+#&gt;            b,
+#&gt;          dd
+#&gt; ) {}</div><div class='input'><span class='fu'><a href='style_text.html'>style_text</a></span>(<span class='st'>"function(a,
+  b,
+  dd
+) {}"</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"indention"</span>)</div><div class='output co'>#&gt; function(a,
+#&gt;          b,
+#&gt;          dd
+#&gt; ) {}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

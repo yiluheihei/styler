@@ -125,7 +125,7 @@
 <span class='fu'>indent_op</span>(<span class='no'>pd</span>, <span class='no'>indent_by</span>, <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='no'>math_token</span>, <span class='no'>logical_token</span>, <span class='no'>special_token</span>,
   <span class='st'>"LEFT_ASSIGN"</span>, <span class='st'>"EQ_ASSIGN"</span>, <span class='st'>"'$'"</span>))
 
-<span class='fu'>indent_eq_sub</span>(<span class='no'>pd</span>, <span class='no'>indent_by</span>, <span class='kw'>token</span> <span class='kw'>=</span> <span class='st'>"EQ_SUB"</span>)
+<span class='fu'>indent_eq_sub</span>(<span class='no'>pd</span>, <span class='no'>indent_by</span>, <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"EQ_SUB"</span>, <span class='st'>"EQ_FORMALS"</span>))
 
 <span class='fu'>indent_assign</span>(<span class='no'>pd</span>, <span class='no'>indent_by</span>, <span class='kw'>token</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
@@ -158,9 +158,12 @@ line break and space information via <code><a href='default_style_guide_attribut
     <ul>
 <li><p><code>indent_braces</code>: Inserts indention based on round, square and
 curly brackets.</p></li>
-<li><p><code>indent_op</code>: Indents operators</p></li>
+<li><p><code>indent_op</code>: Indents <em>all</em> tokens after <code>token</code> - including
+the last token.</p></li>
 <li><p><code>indent_eq_sub</code>: Updates indention for token EQ_SUB. Only differs
-from indent_op in the sense that the last token on the table where EQ_SUB
+from <code>indent_op()</code> in the sense that not all subsequent tokens in the parse
+table are necessarily indented, as <code>EQ_SUB</code> and <code>EQ_FORMALS</code> can occur
+multiple times in a parse table.
 occurs is not indented (see<code><a href='compute_indent_indices.html'>compute_indent_indices()</a></code>)</p></li>
 <li><p><code>indent_assign</code>: Same as indent_op, but only indents one token
 after <code>token</code>, not all remaining.</p></li>

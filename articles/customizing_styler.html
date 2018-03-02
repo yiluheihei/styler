@@ -122,10 +122,10 @@
 ##   ..$ remove_line_break_before_round_closing_after_curly:function (pd)  
 ##   ..$ remove_line_break_before_round_closing_fun_dec    :function (pd)  
 ##   .. [list output truncated]
-##  $ space            :List of 25
+##  $ space            :List of 26
 ##   ..$ indent_braces                     :function (...)  
+##   ..$ unindent_fun_dec                  :function (pd)  
 ##   ..$ indent_op                         :function (...)  
-##   ..$ indent_eq_sub                     :function (...)  
 ##   .. [list output truncated]
 ##   [list output truncated]</code></pre>
 <p>We note that there are different types of transformer functions. <code>initialize</code> initializes some variables in the nested parse table (so it is not actually a transformer), and the other elements modify either spacing, line breaks or tokens. <code>use_raw_indention</code> is not a function, it is just an option. All transformer functions have a similar structure. Let’s take a look at one:</p>

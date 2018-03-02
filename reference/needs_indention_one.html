@@ -29,8 +29,7 @@
   
 <meta property="og:title" content="Check whether indention is needed — needs_indention_one" />
 
-<meta property="og:description" content="Indention is needed if and only if there is no multi-line token between the
-trigger and the first line break." />
+<meta property="og:description" content="Indention is needed if the two conditions apply:" />
 <meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -118,11 +117,10 @@ trigger and the first line break." />
     </div>
 
     
-    <p>Indention is needed if and only if there is no multi-line token between the
-trigger and the first line break.</p>
+    <p>Indention is needed if the two conditions apply:</p>
     
 
-    <pre class="usage"><span class='fu'>needs_indention_one</span>(<span class='no'>pd</span>, <span class='no'>potential_trigger</span>)</pre>
+    <pre class="usage"><span class='fu'>needs_indention_one</span>(<span class='no'>pd</span>, <span class='no'>potential_trigger_pos</span>, <span class='no'>other_trigger_tokens</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -132,9 +130,14 @@ trigger and the first line break.</p>
       <td><p>A parse table.</p></td>
     </tr>
     <tr>
-      <th>potential_trigger</th>
+      <th>potential_trigger_pos</th>
       <td><p>the index of the token in the parse table
 for which it should be checked whether it should trigger indention.</p></td>
+    </tr>
+    <tr>
+      <th>other_trigger_tokens</th>
+      <td><p>Other tokens that are going to cause indention
+if on the same line as the token corresponding to <code>potential_trigger</code>.</p></td>
     </tr>
     </table>
     
@@ -144,6 +147,14 @@ for which it should be checked whether it should trigger indention.</p></td>
 
 <code>TRUE</code> if indention is needed, <code>FALSE</code> otherwise.</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <ul>
+<li><p>there is no multi-line token between the trigger and the first line break.</p></li>
+<li><p>there is no other token between the potential trigger and the first line
+break that is going to cause indention.</p></li>
+</ul>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -152,6 +163,8 @@ for which it should be checked whether it should trigger indention.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
           </ul>
 
   </div>
