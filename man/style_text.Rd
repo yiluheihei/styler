@@ -7,7 +7,8 @@
 style_text(text, ..., style = tidyverse_style, transformers = style(...))
 }
 \arguments{
-\item{text}{A character vector with text to style.}
+\item{text}{A character vector with text to style. If not given, text is read
+from the clipboard.}
 
 \item{...}{Arguments passed on to the \code{style} function.}
 
@@ -21,10 +22,15 @@ conveniently constructed via the \code{style} argument and \code{...}. See
 'Examples'.}
 }
 \description{
-Styles a character vector. Each element of the character vector corresponds
-to one line of code.
+Styles a character vector, either from clipboard or supplied text. Each
+element of the character vector corresponds to one line of code.
 }
 \examples{
+\dontrun{
+# put some code like this on the clipboard
+# code <- c(    1,       16    , 333 , 33 ,  1)
+style
+}
 style_text("call( 1)")
 style_text("1    + 1", strict = FALSE)
 style_text("a\%>\%b", scope = "spaces")

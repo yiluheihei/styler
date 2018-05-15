@@ -1,6 +1,7 @@
 #' @api
 #' @import tibble
 #' @importFrom magrittr %>%
+#' @importFrom clipr read_clip write_clip clipr_available
 NULL
 
 #' Prettify R source code
@@ -103,12 +104,18 @@ prettify_pkg <- function(transformers, filetype, exclude_files) {
 
 #' Style a string
 #'
-#' Styles a character vector. Each element of the character vector corresponds
-#' to one line of code.
-#' @param text A character vector with text to style.
+#' Styles a character vector, either from clipboard or supplied text. Each
+#' element of the character vector corresponds to one line of code.
+#' @param text A character vector with text to style. If not given, text is read
+#' from the clipboard.
 #' @inheritParams style_pkg
 #' @family stylers
 #' @examples
+#' \dontrun{
+#' # put some code like this on the clipboard
+#' # code <- c(    1,       16    , 333 , 33 ,  1)
+#' style
+#' }
 #' style_text("call( 1)")
 #' style_text("1    + 1", strict = FALSE)
 #' style_text("a%>%b", scope = "spaces")
@@ -122,8 +129,21 @@ style_text <- function(text,
                        ...,
                        style = tidyverse_style,
                        transformers = style(...)) {
+  if (missing(text)) {
+    text <- tryCatch(read_clip(),
+      error = function(e) {return(NULL)}
+    )
+
+    if (is.null(text)) {
+      if (!clipr_available()) warning("Clipboard is not available")
+      else suppressWarnings(read_clip())
+      return(NULL)
+    }
+  }
+
   transformer <- make_transformer(transformers)
   styled_text <- transformer(text)
+  write_clip(styled_text)
   construct_vertical(styled_text)
 }
 

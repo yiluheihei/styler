@@ -8,6 +8,7 @@ Description:
 Imports:
     backports,
     cli,
+    clipr,
     enc (>= 0.2),
     magrittr,
     purrr (>= 0.2.3),
