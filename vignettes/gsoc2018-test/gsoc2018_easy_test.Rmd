@@ -1,0 +1,84 @@
+---
+title: "Easy test"
+author: "Yang Cao"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Easy test}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+Good R code style will make your R code easier to read, share, and verify. The **styler** was designed to format R code (e.g. spacing, identation) to make our code in consistent style. Two data structures flat and nest parse table are introduced in **styler**.
+
+## Flat parse table is less elegent and flexible 
+
+The flat parse structure, contains the detailed information for each token, is obtained by parsing the source code using `getParseData()` and do some preprocessing on it (e.g. add line-break and space information). Based on the flat parse structure, we can do some basic code formating, such as add/remove whitespace and line break. 
+
+A code block is a group of statements that, together, perform a task. Code blocks may textually contain other code blocks and invoke other code blocks. **R program can be treated as nested code blocks**.
+
+**Indentation** is one of the most important aspects in R programming. It is used to governing the indentation of blocks of code to help better convey the structure of a program to human readers. There are several situations require indentation in R, e.g. curly brackets, operators (such as plus `+`, pipe `%>%`), round and square brackets. 
+
+Apprantly, all tokens in a code block have the same indentation level.  However, the flat parse structure does not account for the context of the token. It is less elegent and flexible to nested code block indentation. Take curly brackets for example, we can only set the indention level based on the opening and closing curly brackets. First, while a opening curly bracket is touched, the following code line in the parse table sets the same indentation, then if the corresbonding closing curly bracket is hit, adding one indentation level; if the other opening curly bracket is hit, setting indention back to Where it was at the beginning of the table.
+
+## A natural and flexible data structure - Nested parse table
+
+As mentioned above, the R program can be regarded as nested code blocks. A natural data structure - the nested parse table, which represents the hierarchical view on the parse data, is a better choice. The expression is split up further to sub-expression until the tibbles (sub-expressions) only contain terminals. 
+
+A visitor apprach was used to apply transformer functions at each level of nested parse table.  Finally, convert the transformed nested-tibble to its character vector representation.
+
+## Flatten some token which should be in the same indentation level in the nested parse table 
+
+Some tokens (e.g. math token, `$`) are not placed optimally in the regular nested parse table. Take the math token `+` for example, the `a + b + c` is interpreted as `(a + b) + c`, and the regular nested parse talbeare show as follows:
+
+```
+pd_nested
+
+# A tibble: 1 x 15
+     id pos_id line1  col1 line2  col2 parent token terminal text  short
+  <int>  <int> <int> <int> <int> <int>  <int> <chr> <lgl>    <chr> <chr>
+1    11      1     1     1     1     9      0 expr  FALSE    ""    ""   
+# ... with 4 more variables: token_before <chr>, token_after <chr>,
+#   internal <lgl>, child <list>
+
+pd_nested$child[[1]]
+
+# A tibble: 3 x 15
+     id pos_id line1  col1 line2  col2 parent token terminal text  short
+  <int>  <int> <int> <int> <int> <int>  <int> <chr> <lgl>    <chr> <chr>
+1     7      2     1     1     1     5     11 expr  FALSE    ""    ""   
+2     5      8     1     7     1     7     11 '+'   TRUE     +     +    
+3    10     10     1     9     1     9     11 expr  FALSE    ""    ""   
+# ... with 4 more variables: token_before <chr>, token_after <chr>,
+#   internal <lgl>, child <list>
+
+pd_nested$child[[1]]$child[[1]]
+
+# A tibble: 3 x 15
+     id pos_id line1  col1 line2  col2 parent token terminal text  short
+  <int>  <int> <int> <int> <int> <int>  <int> <chr> <lgl>    <chr> <chr>
+1     3      4     1     1     1     1      7 expr  FALSE    ""    ""   
+2     2      5     1     3     1     3      7 '+'   TRUE     +     +    
+3     6      7     1     5     1     5      7 expr  FALSE    ""    ""   
+# ... with 4 more variables: token_before <chr>, token_after <chr>,
+#   internal <lgl>, child <list>
+```
+
+Actually, all the tokens in expression `a + b + c` should all be on the same level of nesting. To set the indentation correctly, this type of nested table should be converted to a flat structure to make the tokens on the same level of nesting before some transformers token place.
+
+```
+flatten_operators(pd_nested)$child[[1]]
+
+# A tibble: 5 x 15
+     id pos_id line1  col1 line2  col2 parent token terminal text  short
+  <int>  <int> <int> <int> <int> <int>  <int> <chr> <lgl>    <chr> <chr>
+1     3      4     1     1     1     1      7 expr  FALSE    ""    ""   
+2     2      5     1     3     1     3      7 '+'   TRUE     +     +    
+3     6      7     1     5     1     5      7 expr  FALSE    ""    ""   
+4     5      8     1     7     1     7     11 '+'   TRUE     +     +    
+5    10     10     1     9     1     9     11 expr  FALSE    ""    ""   
+# ... with 4 more variables: token_before <chr>, token_after <chr>,
+#   internal <lgl>, child <list>
+```
+
+
